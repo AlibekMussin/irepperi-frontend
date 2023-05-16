@@ -17,7 +17,7 @@ const Form = () =>{
     const onChangeSubject = (e) =>{
         setSubject(e.target.value)
     }
-    const {tg} = useTelegram;
+    const {tg} = useTelegram();
 
     useEffect(() => {
         tg.MainButton.setParams({
