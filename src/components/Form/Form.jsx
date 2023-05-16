@@ -15,7 +15,7 @@ const Form = () =>{
         tg.sendData(JSON.stringify(data));
 
 
-    }, []);
+    }, [country, street, subject]);
 
     const onChangeCountry = (e) =>{
         setCountry(e.target.value)
