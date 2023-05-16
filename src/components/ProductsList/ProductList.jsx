@@ -62,7 +62,7 @@ const ProductList = () =>{
             queryId
 
         }
-        fetch('http://195.49.215.161:8009',{
+        fetch('http://195.49.215.161:8009/web-data',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
