@@ -8,29 +8,18 @@ const Form = () =>{
     const [street, setStreet] = useState('');
     const [subject, setSubject] = useState('physical');
     const {tg} = useTelegram();
+
     const onSendData = useCallback(()=>{
         const data = {
             country, street, subject
         }
         tg.sendData(JSON.stringify(data));
-
-
     }, [country, street, subject]);
 
-    const onChangeCountry = (e) =>{
-        setCountry(e.target.value)
-    }
-    const onChangeStreet = (e) =>{
-        setStreet(e.target.value)
-    }
-    const onChangeSubject = (e) =>{
-        setSubject(e.target.value)
-    }
-
     useEffect(() => {
-        tg.onEvent('mainButtonClicked', callback);
+        tg.onEvent('mainButtonClicked', onSendData);
         return ()=>{
-            tg.offEvent('mainButtonClicked', callback);
+            tg.offEvent('mainButtonClicked', onSendData);
         }
     },[onSendData]);
 
@@ -52,6 +41,16 @@ const Form = () =>{
         
     },[country,street]);
 
+    const onChangeCountry = (e) =>{
+        setCountry(e.target.value)
+    }
+    const onChangeStreet = (e) =>{
+        setStreet(e.target.value)
+    }
+    const onChangeSubject = (e) =>{
+        setSubject(e.target.value)
+    }
+    
     return (
         <div className={"form"}>
             <h3>Введите ваши данные</h3>
