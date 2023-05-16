@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import { useTelegram } from "../../hooks/useTelegram"; 
 import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
+import {useCallback, useEffect} from "react";
 
 const products = [
     {id: '1', title: 'Джинсы', price: 5000, description: 'Синего цвета, прямые'},
