@@ -4,17 +4,6 @@ import ProductItem from "../ProductItem/ProductItem";
 import { useTelegram } from "../../hooks/useTelegram"; 
 import {useCallback, useEffect} from "react";
 
-const products = [
-    {id: '1', title: 'Джинсы', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '2', title: 'Куртка', price: 12000, description: 'Зеленого цвета, теплая'},
-    {id: '3', title: 'Джинсы 2', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '4', title: 'Куртка 8', price: 122, description: 'Зеленого цвета, теплая'},
-    {id: '5', title: 'Джинсы 3', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '6', title: 'Куртка 7', price: 600, description: 'Зеленого цвета, теплая'},
-    {id: '7', title: 'Джинсы 4', price: 5500, description: 'Синего цвета, прямые'},
-    {id: '8', title: 'Куртка 5', price: 12000, description: 'Зеленого цвета, теплая'},
-]
-
 const getTotalPrice = (items) =>{
     return items.reduce((acc, item)=>{
         return acc += item.price
@@ -25,7 +14,8 @@ const getTotalPrice = (items) =>{
 const ProductList = () =>{
     const [addedItems, setAddedItems ] = useState([]);
     const {tg, queryId} = useTelegram();
-    
+    const [products, setProducts] = useState([]);
+
     const onSendData = useCallback(() => {
         const data = {
             products: addedItems,
@@ -42,11 +32,33 @@ const ProductList = () =>{
     }, [addedItems])
 
     useEffect(() => {
+        console.log('111');
+        
+        async function fetchData() {
+            try{
+                const response = await fetch('http://195.49.215.161:8011/api/goods');
+                // console.log(response);
+                const jsonData = await response.json();
+                setProducts(jsonData);
+                console.log(jsonData);
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+        }
+        console.log('222');
+        
+        fetchData();
+    },[]);
+
+
+    useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData)
         return () => {
             tg.offEvent('mainButtonClicked', onSendData)
         }
-    }, [onSendData])
+    }, [onSendData]);
 
     const onAdd = (product) =>{
         const alreadyAdded = addedItems.find(item => item.id === product.id);
