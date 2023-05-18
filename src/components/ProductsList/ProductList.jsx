@@ -28,8 +28,18 @@ const ProductList = () =>{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
-        })
+        }).then(response => {
+            if (!response.ok) {
+              throw new Error('Request failed');
+            }
+            // Дополнительная обработка ответа, если необходимо
+            console.log('Request successful');
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
     }, [addedItems])
+
 
     useEffect(() => {
         console.log('111');
@@ -37,10 +47,9 @@ const ProductList = () =>{
         async function fetchData() {
             try{
                 const response = await fetch('https://shiba.kz/api/goods');
-                // console.log(response);
                 const jsonData = await response.json();
                 setProducts(jsonData);
-                console.log(jsonData);
+                // console.log(jsonData);
             }
             catch (e)
             {
@@ -50,10 +59,7 @@ const ProductList = () =>{
         console.log('222');
         
         fetchData();
-    },[]);
 
-
-    useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData)
         return () => {
             tg.offEvent('mainButtonClicked', onSendData)
