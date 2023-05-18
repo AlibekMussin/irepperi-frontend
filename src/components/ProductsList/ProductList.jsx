@@ -36,7 +36,7 @@ const ProductList = () =>{
         
         async function fetchData() {
             try{
-                const response = await fetch('http://195.49.215.161:8011/api/goods');
+                const response = await fetch('https://shiba.kz/api/goods');
                 // console.log(response);
                 const jsonData = await response.json();
                 setProducts(jsonData);
