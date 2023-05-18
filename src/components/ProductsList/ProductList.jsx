@@ -22,7 +22,7 @@ const ProductList = () =>{
             totalPrice: getTotalPrice(addedItems),
             queryId,
         }
-        fetch('http://195.49.215.161:8009/web-data',{
+        fetch('https://shiba.kz:8009/web-data',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
