@@ -99,7 +99,7 @@ const ProductList = () =>{
 
     return (
         <div className="list">
-          <Accordion allowZeroExpanded>
+          <Accordion allowZeroExpanded style={{"width":"100%"}}>
             {products.reduce((sections, item) => {
               const sectionIndex = sections.findIndex(
                 section => section.title === item.section_title
