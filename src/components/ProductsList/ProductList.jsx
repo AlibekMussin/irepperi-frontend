@@ -8,10 +8,10 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 import Masonry from 'react-masonry-css';
 
 const breakpointColumnsObj = {
-  default: 4, // Количество колонок по умолчанию
+  default: 3, // Количество колонок по умолчанию
   1200: 3, // Количество колонок при ширине экрана 1200px и выше
-  900: 2, // Количество колонок при ширине экрана 900px и выше
-  600: 4 // Количество колонок при ширине экрана 600px и выше
+  900: 3, // Количество колонок при ширине экрана 900px и выше
+  600: 3 // Количество колонок при ширине экрана 600px и выше
 };
 
 const getTotalPrice = (items) =>{
