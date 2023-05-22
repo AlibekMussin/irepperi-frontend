@@ -3,6 +3,9 @@ import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import { useTelegram } from "../../hooks/useTelegram"; 
 import {useCallback, useEffect} from "react";
+import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from 'react-accessible-accordion';
+import 'react-accessible-accordion/dist/fancy-example.css';
+
 
 const getTotalPrice = (items) =>{
     return items.reduce((acc, item)=>{
@@ -96,38 +99,44 @@ const ProductList = () =>{
 
     return (
         <div className="list">
-          {products.reduce((sections, item) => {
-            const sectionIndex = sections.findIndex(
-              section => section.title === item.section_title
-            );
-            if (sectionIndex === -1) {
-              sections.push({
-                title: item.section_title,
-                items: [item]
-              });
-            } else {
-              sections[sectionIndex].items.push(item);
-            }
-            return sections;
-          }, []).map(section => (
-            <div key={section.title} className="section">
-              <h2>{section.title}</h2>
-              <div className="section-items">
-                {section.items.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={`section-item ${index % 3 === 2 ? 'last-in-row' : ''}`}
-                  >
-                    <ProductItem
-                      product={item}
-                      onAdd={onAdd}
-                      className={'item'}
-                    />
+          <Accordion allowZeroExpanded>
+            {products.reduce((sections, item) => {
+              const sectionIndex = sections.findIndex(
+                section => section.title === item.section_title
+              );
+              if (sectionIndex === -1) {
+                sections.push({
+                  title: item.section_title,
+                  items: [item]
+                });
+              } else {
+                sections[sectionIndex].items.push(item);
+              }
+              return sections;
+            }, []).map(section => (
+              <AccordionItem key={section.title}>
+                <AccordionItemHeading>
+                    <AccordionItemButton>{section.title}</AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <div className="section-items">
+                    {section.items.map((item, index) => (
+                      <div
+                        key={item.id}
+                        className={`section-item ${index % 4 === 3 ? 'last-in-row' : ''}`}
+                      >
+                        <ProductItem
+                          product={item}
+                          onAdd={onAdd}
+                          className={'item'}
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
+                </AccordionItemPanel>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       );
 }
