@@ -95,20 +95,41 @@ const ProductList = () =>{
     }
 
     return (
-        <div className={'list'}>
-            {products.map(item => (
-                <ProductItem 
-                product = {item}
-                onAdd = {onAdd}
-                key={item.id}
-                className={'item'}
-                />
-            ))
-
+        <div className="list">
+          {products.reduce((sections, item) => {
+            const sectionIndex = sections.findIndex(
+              section => section.title === item.section_title
+            );
+            if (sectionIndex === -1) {
+              sections.push({
+                title: item.section_title,
+                items: [item]
+              });
+            } else {
+              sections[sectionIndex].items.push(item);
             }
-            
+            return sections;
+          }, []).map(section => (
+            <div key={section.title} className="section">
+              <h2>{section.title}</h2>
+              <div className="section-items">
+                {section.items.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className={`section-item ${index % 4 === 3 ? 'last-in-row' : ''}`}
+                  >
+                    <ProductItem
+                      product={item}
+                      onAdd={onAdd}
+                      className={'item'}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-    )
+      );
 }
 
 export default ProductList;

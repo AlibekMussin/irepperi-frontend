@@ -8,3 +8,22 @@
     margin-right: 10px;
     margin-bottom: 10px;
 }
+
+.section {
+    margin-bottom: 20px;
+  }
+  
+  .section-items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .section-item {
+    width: calc(25% - 10px); /* 4 items per row with margin between */
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .section-item.last-in-row {
+    margin-right: 0;
+  }
