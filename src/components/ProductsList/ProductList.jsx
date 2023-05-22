@@ -5,7 +5,14 @@ import { useTelegram } from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
+import Masonry from 'react-masonry-css';
 
+const breakpointColumnsObj = {
+  default: 4, // Количество колонок по умолчанию
+  1200: 3, // Количество колонок при ширине экрана 1200px и выше
+  900: 2, // Количество колонок при ширине экрана 900px и выше
+  600: 1 // Количество колонок при ширине экрана 600px и выше
+};
 
 const getTotalPrice = (items) =>{
     return items.reduce((acc, item)=>{
@@ -119,20 +126,21 @@ const ProductList = () =>{
                     <AccordionItemButton>{section.title}</AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel>
-                  <div className="section-items">
-                    {section.items.map((item, index) => (
-                      <div
-                        key={item.id}
-                        className={`section-item ${index % 4 === 3 ? 'last-in-row' : ''}`}
-                      >
-                        <ProductItem
-                          product={item}
-                          onAdd={onAdd}
-                          className={'item'}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                    <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className="masonry-grid"
+                    columnClassName="masonry-grid-column"
+                    >
+                        {section.items.map(item => (
+                            <div key={item.id} className="section-item">
+                                <ProductItem
+                                product={item}
+                                onAdd={onAdd}
+                                className={'item'}
+                            />
+                            </div>
+                        ))}
+                    </Masonry>                  
                 </AccordionItemPanel>
               </AccordionItem>
             ))}

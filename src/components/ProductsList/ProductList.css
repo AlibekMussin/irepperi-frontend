@@ -44,3 +44,17 @@
   h2{
     font-size: 17px;
   }
+
+  .masonry-grid {
+    display: flex;
+    margin-left: -16px; /* Скорректируйте отступы в зависимости от ваших потребностей */
+    width: auto;
+  }
+  
+  .masonry-grid-column {
+    padding-left: 16px; /* Скорректируйте отступы в зависимости от ваших потребностей */
+  }
+  
+  .section-item {
+    margin-bottom: 16px; /* Скорректируйте отступы в зависимости от ваших потребностей */
+  }
