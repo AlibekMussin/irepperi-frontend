@@ -116,7 +116,7 @@ const ProductList = () =>{
                 {section.items.map((item, index) => (
                   <div
                     key={item.id}
-                    className={`section-item ${index % 4 === 3 ? 'last-in-row' : ''}`}
+                    className={`section-item ${index % 3 === 2 ? 'last-in-row' : ''}`}
                   >
                     <ProductItem
                       product={item}

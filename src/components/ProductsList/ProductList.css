@@ -18,27 +18,9 @@
     color: var(--text-color);
     color-scheme: var(--tg-color-scheme);
     margin: 0;
-    padding: 0;
-    width: 1px;
-    min-width: 100%;
-    --default-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    --block-bg-color: var(--tg-theme-bg-color);
-    --bg-color: var(--tg-theme-secondary-bg-color, #ebedf0);
-    --animation: .15s ease;
-    --page-animation-duration: .3s;
-    --page-animation: var(--page-animation-duration) ease;
-    --status-height: 48px;
-    --accent-color: #31b545;
-    --main-color: #f8a917;
-    --text-color: #222;
-    --page-hint-color: #83878a;
-    --hint-color: #74787a;
-    --placeholder-color: #999da1;
-    --ripple-duration: .45s;
-    --ripple-end-duration: .3s;
+    padding: 0;    
     -webkit-user-select: none;
-    user-select: none;
-    cursor: default;
+    user-select: none;    
 }
 .list {
     display: flex;
@@ -61,11 +43,14 @@
   }
   
   .section-item {
-    width: calc(25% - 10px); /* 4 items per row with margin between */
+    width: calc(33% - 10px); /* 4 items per row with margin between */
     margin-right: 10px;
     margin-bottom: 10px;
   }
   
   .section-item.last-in-row {
     margin-right: 0;
+  }
+  h2{
+    font-size: 17px;
   }
