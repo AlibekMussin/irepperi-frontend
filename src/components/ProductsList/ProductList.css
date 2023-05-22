@@ -58,3 +58,6 @@
   .section-item {
     margin-bottom: 16px; /* Скорректируйте отступы в зависимости от ваших потребностей */
   }
+  .accordion__panel{
+    padding: 2px!important;
+  }
