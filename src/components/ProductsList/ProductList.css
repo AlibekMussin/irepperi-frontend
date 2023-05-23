@@ -1,4 +1,4 @@
-  body {
+body {
     font-family: var(--default-font);
     font-size: 13px;
     line-height: 16px;
@@ -52,7 +52,7 @@
   }
   
   .masonry-grid-column {
-    padding-left: 6px; /* Скорректируйте отступы в зависимости от ваших потребностей */
+    padding-left: 16px; /* Скорректируйте отступы в зависимости от ваших потребностей */
   }
   
   .section-item {
