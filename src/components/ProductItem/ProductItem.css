@@ -1,7 +1,8 @@
 .product {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--tg-theme-button-color);
+    /* border: 1px solid var(--tg-theme-button-color); */
+    border: 0;
     padding: 2px;
     width: 130px;
     height: 270px;
@@ -11,7 +12,7 @@
 .img {
     background: lightgray;
     max-height: 80%;
-    max-width: 80%;
+    max-width: 100%;
     margin: 0 auto;
     background: var(--tg-theme-button-color);
 }
