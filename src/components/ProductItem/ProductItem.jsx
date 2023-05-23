@@ -20,6 +20,7 @@ const ProductItem = ({product, className, onAdd}) => {
         onAdd(product);
     }
     const buttonText = isButtonPressed ? 'Добавлено' : 'В корзину';
+    const buttonClassName = isButtonPressed ? 'add-btn pressed' : 'add-btn';
 
     return (
         <div className={'product ' + className}>
@@ -30,7 +31,7 @@ const ProductItem = ({product, className, onAdd}) => {
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
             <div style={{ marginTop: 'auto' }}>
-                <Button className={'add-btn'} onClick={onAddHandler}>
+                <Button className={buttonClassName} onClick={onAddHandler}>
                     {buttonText}
                 </Button>
             </div>

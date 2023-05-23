@@ -24,3 +24,6 @@
 .add-btn {
     width: 100%;
 }
+.add-btn.pressed {
+    background:rgb(233,150,122);
+  }
