@@ -101,7 +101,7 @@ const ProductList = () =>{
           console.log( `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
             tg.MainButton.show();
             tg.MainButton.setParams({
-                text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг `
+                text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`
             })
         }
     }

@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import Button from "../Button/Button";
 import './ProductItem.css';
+import FullScreenProduct from '../FullScreenProduct/FullScreenProduct';
 
 const ProductItem = ({product, className, onAdd}) => {
     const [isButtonPressed, setIsButtonPressed] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(false);
+
+    const openFullScreen = () => {
+        setIsFullScreen(true);
+      };
+    
+      const closeFullScreen = () => {
+        setIsFullScreen(false);
+      };
 
     const onAddHandler = () => {
         if (isButtonPressed == false)
@@ -24,7 +34,10 @@ const ProductItem = ({product, className, onAdd}) => {
 
     return (
         <div className={'product ' + className}>
-            <img className={'img'} src={product.image}/>
+            <img className={'img'} src={product.image}  onClick={openFullScreen}/>
+            {isFullScreen && (
+        <FullScreenProduct imageUrl={product.image} onClose={closeFullScreen} />
+      )}
             <div className={'title'}>{product.title}</div>
             <div className={'description'}>{product.description}</div>
             <div className={'price'}>
