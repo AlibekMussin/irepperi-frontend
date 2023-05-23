@@ -59,3 +59,10 @@ body {
   .accordion__panel{
     padding: 2px!important;
   }
+  .accordion__button{
+    padding: 8px!important;
+  }
+  .accordion__button:before{
+    height: 5px!important;
+    width: 5px!important;
+  }
