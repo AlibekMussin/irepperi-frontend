@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState } from "react";
 import Button from "../Button/Button";
 import './ProductItem.css';
 
 const ProductItem = ({product, className, onAdd}) => {
+    const [isButtonPressed, setIsButtonPressed] = useState(false);
 
     const onAddHandler = () => {
+        if (isButtonPressed == false)
+            setIsButtonPressed(true);
+        else
+            setIsButtonPressed(false);
+
+
+        // Через некоторое время сбросите состояние isButtonPressed
+        // setTimeout(() => {
+        //   setIsButtonPressed(false);
+        // }, 200);
+
         onAdd(product);
     }
+    const buttonText = isButtonPressed ? 'Добавлено' : 'В корзину';
 
     return (
         <div className={'product ' + className}>
@@ -17,10 +30,10 @@ const ProductItem = ({product, className, onAdd}) => {
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
             <div style={{ marginTop: 'auto' }}>
-      <Button className={'add-btn'} onClick={onAddHandler}>
-        В корзину
-      </Button>
-    </div>
+                <Button className={'add-btn'} onClick={onAddHandler}>
+                    {buttonText}
+                </Button>
+            </div>
         </div>
     );
 };

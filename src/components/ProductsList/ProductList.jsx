@@ -97,9 +97,11 @@ const ProductList = () =>{
         }
         else
         {
+          const goodsCount = newItems.length;
+          console.log( `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
             tg.MainButton.show();
             tg.MainButton.setParams({
-                text:`Купить ${getTotalPrice(newItems)}`
+                text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг `
             })
         }
     }
