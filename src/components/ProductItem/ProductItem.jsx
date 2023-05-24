@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import './ProductItem.css';
 import FullScreenProduct from '../FullScreenProduct/FullScreenProduct';
+import ProductDetail from '../ProductDetail/ProductDetail';
+import { Link } from 'react-router-dom';
+
 
 const ProductItem = ({product, className, onAdd}) => {
     const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -36,13 +39,14 @@ const ProductItem = ({product, className, onAdd}) => {
         <div className={'product ' + className}>
             <img className={'img'} src={product.image}  onClick={openFullScreen}/>
             {isFullScreen && (
-        <FullScreenProduct imageUrl={product.image} onClose={closeFullScreen} />
-      )}
+            <FullScreenProduct imageUrl={product.image} onClose={closeFullScreen} />
+            )}
             <div className={'title'}>{product.title}</div>
             <div className={'description'}>{product.description}</div>
             <div className={'price'}>
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
+            <Link to={`/product/${product.id}`} product={product.id}>Подробнее</Link>
             <div style={{ marginTop: 'auto' }}>
                 <Button className={buttonClassName} onClick={onAddHandler}>
                     {buttonText}

@@ -4,6 +4,7 @@ import { useTelegram } from './hooks/useTelegram';
 import Header from './components/Header/Header';
 import { Route, Routes } from 'react-router-dom';
 import ProductList from './components/ProductsList/ProductList';
+import ProductDetail from './components/ProductDetail/ProductDetail';
 import FullScreenProduct from './components/FullScreenProduct/FullScreenProduct';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route index element={<ProductList />}/>
         <Route path={'form'} element={<FullScreenProduct />}/>
+        <Route path={"/product/:productId"} element={<ProductDetail/>} />
       </Routes>
     </div>
 
