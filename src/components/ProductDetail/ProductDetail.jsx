@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 
-const ProductDetail = ({ match }) => {
+const ProductDetail = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState({});
 
 
     useEffect(() => {
         console.log('333');
-        // const productId = match.params.productId;
         console.log(productId);
         
         async function fetchData() {
