@@ -24,7 +24,8 @@ const ProductDetail = () => {
             }
         }
         console.log('444');        
-        fetchData();    
+        fetchData();
+        tg.BackButton.show();
     
     }, []);
 
