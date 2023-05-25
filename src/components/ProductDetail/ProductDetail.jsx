@@ -30,7 +30,7 @@ const ProductDetail = () => {
         tg.onEvent('backButtonClicked', function() {
           // Обработка события кнопки "назад"
           console.log("Нажата кнопка 'назад'");
-          tg.WebApp.goBack();
+          tg.goBack();
           // Дополнительные действия
         });
     
