@@ -39,7 +39,7 @@ const ProductDetail = () => {
           <div className="product-description">{description}</div>
           <div className="product-price">Стоимость: <b>{price}</b></div>
           <div className="product-images">
-            {images.map((image, index) => (
+            {images?.map((image, index) => (
               <img
                 key={index}
                 className="product-image"
@@ -47,7 +47,7 @@ const ProductDetail = () => {
                 alt={`Product Image ${index + 1}`}
               />
             ))}
-            
+
           </div>
         </div>
       );
