@@ -47,6 +47,7 @@ const ProductDetail = () => {
                 alt={`Product Image ${index + 1}`}
               />
             ))}
+            
           </div>
         </div>
       );
