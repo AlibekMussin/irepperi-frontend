@@ -27,6 +27,12 @@ const ProductDetail = () => {
         console.log('444');        
         fetchData();
         tg.BackButton.show();
+        tg.onEvent('backButtonClicked', function() {
+          // Обработка события кнопки "назад"
+          console.log("Нажата кнопка 'назад'");
+          tg.WebApp.goBack();
+          // Дополнительные действия
+        });
     
     }, []);
 
