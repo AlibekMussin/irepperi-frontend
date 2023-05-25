@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-
+import { useTelegram } from "../../hooks/useTelegram"; 
 
 const ProductDetail = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState({});
+    const {tg} = useTelegram();
 
 
     useEffect(() => {
