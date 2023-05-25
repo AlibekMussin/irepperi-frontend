@@ -58,8 +58,8 @@ const ProductList = () =>{
             try{
                 const response = await fetch('https://shiba.kz/api/goods');
                 const jsonData = await response.json();
-                setProducts(jsonData);
-                // console.log(jsonData);
+                setProducts(jsonData.products);
+                console.log(jsonData);
             }
             catch (e)
             {
