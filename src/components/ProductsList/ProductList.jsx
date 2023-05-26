@@ -76,7 +76,6 @@ const ProductList = () =>{
         console.log('222');
         
         fetchData();
-        onSendData();
 
         tg.onEvent('mainButtonClicked', onSendData)
         return () => {
