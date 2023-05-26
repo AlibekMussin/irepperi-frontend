@@ -42,7 +42,7 @@ const ProductDetail = () => {
           // Обработка события кнопки "назад"
           console.log("Нажата кнопка 'назад'");
           // tg.goBack();
-          window.location.href = process.env.APP_URL;
+          window.location.href = 'https://dazzling-centaur-bfa773.netlify.app';
           // Дополнительные действия
         });
     
