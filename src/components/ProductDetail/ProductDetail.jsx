@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory  } from 'react-router-dom';
 import { useTelegram } from "../../hooks/useTelegram"; 
 
 import SwiperCore, { Navigation, Pagination } from 'swiper';
@@ -41,7 +41,8 @@ const ProductDetail = () => {
         tg.onEvent('backButtonClicked', function() {
           // Обработка события кнопки "назад"
           console.log("Нажата кнопка 'назад'");
-          tg.goBack();
+          // tg.goBack();
+          history.push('/other-page');
           // Дополнительные действия
         });
     
