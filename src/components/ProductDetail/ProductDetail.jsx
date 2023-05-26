@@ -42,7 +42,7 @@ const ProductDetail = () => {
           // Обработка события кнопки "назад"
           console.log("Нажата кнопка 'назад'");
           // tg.goBack();
-          window.location.href = '/other-page';
+          window.location.href = process.env.APP_URL;
           // Дополнительные действия
         });
     
