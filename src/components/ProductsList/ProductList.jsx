@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
+import Spinner from "../Spinner/Spinner";
 import { useTelegram } from "../../hooks/useTelegram"; 
 import {useCallback, useEffect} from "react";
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from 'react-accessible-accordion';
@@ -25,6 +26,7 @@ const ProductList = () =>{
     const [addedItems, setAddedItems ] = useState([]);
     const {tg, queryId} = useTelegram();
     const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const onSendData = useCallback(() => {
         const data = {
@@ -52,13 +54,15 @@ const ProductList = () =>{
 
 
     useEffect(() => {
-        console.log('111');
+        console.log('111');        
         
         async function fetchData() {
+            setIsLoading(true);
             try{
                 const response = await fetch('https://shiba.kz/api/goods');
                 const jsonData = await response.json();
                 setProducts(jsonData.products);
+                setIsLoading(false);     
                 console.log(jsonData);
             }
             catch (e)
@@ -108,6 +112,9 @@ const ProductList = () =>{
 
     return (
         <div className="list">
+        {isLoading ? (
+            <Spinner />
+          ) : (
           <Accordion allowZeroExpanded style={{"width":"100%"}}>
             {products.reduce((sections, item) => {
               const sectionIndex = sections.findIndex(
@@ -147,7 +154,7 @@ const ProductList = () =>{
               </AccordionItem>
             ))}
           </Accordion>
-        </div>
+        )}</div>
       );
 }
 
