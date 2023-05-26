@@ -27,7 +27,7 @@ const ProductItem = ({product, className, onAdd}) => {
 
         onAdd(product);
     }
-    
+
     const buttonText = isButtonPressed ? 'Добавлено' : 'В корзину';
     const buttonClassName = isButtonPressed ? 'add-btn pressed' : 'add-btn';
 
@@ -42,7 +42,7 @@ const ProductItem = ({product, className, onAdd}) => {
             <div className={'price'}>
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
-            <Link to={`/product/${product.id}`} product={product.id}>Подробнее</Link>
+            <Link className={'link'} to={`/product/${product.id}`} product={product.id}>Подробнее</Link>
             <div style={{ marginTop: 'auto' }}>
                 <Button className={buttonClassName} onClick={onAddHandler}>
                     {buttonText}
