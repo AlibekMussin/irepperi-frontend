@@ -2,6 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { useTelegram } from "../../hooks/useTelegram"; 
 
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.min.css';
+// import 'swiper/components/navigation/navigation.min.css';
+// import 'swiper/components/pagination/pagination.min.css';
+
+SwiperCore.use([Navigation, Pagination]);
+
+
 const ProductDetail = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState({});
@@ -46,7 +55,7 @@ const ProductDetail = () => {
           <h2 className="product-title">{title}</h2>
           <div className="product-description">{description}</div>
           <div className="product-price">Стоимость: <b>{price}</b></div>
-          <div className="product-images">
+          {/* <div className="product-images">
             {images?.map((image, index) => (
               <img
                 key={index}
@@ -55,8 +64,21 @@ const ProductDetail = () => {
                 alt={`Product Image ${index + 1}`}
               />
             ))}
+          </div> */}
 
-          </div>
+          <Swiper
+            navigation
+            pagination={{ clickable: true }}
+            spaceBetween={10}
+            slidesPerView={1}
+          >
+            {images?.map((image, index) => (
+              <SwiperSlide key={index}>
+                <img src={image.image_src} alt={`Photo ${index + 1}`} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
         </div>
       );
   };

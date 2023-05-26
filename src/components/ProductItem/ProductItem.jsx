@@ -14,7 +14,7 @@ const ProductItem = ({product, className, onAdd}) => {
         setIsFullScreen(true);
       };
     
-      const closeFullScreen = () => {
+    const closeFullScreen = () => {
         setIsFullScreen(false);
       };
 
@@ -25,13 +25,9 @@ const ProductItem = ({product, className, onAdd}) => {
             setIsButtonPressed(false);
 
 
-        // Через некоторое время сбросите состояние isButtonPressed
-        // setTimeout(() => {
-        //   setIsButtonPressed(false);
-        // }, 200);
-
         onAdd(product);
     }
+    
     const buttonText = isButtonPressed ? 'Добавлено' : 'В корзину';
     const buttonClassName = isButtonPressed ? 'add-btn pressed' : 'add-btn';
 
