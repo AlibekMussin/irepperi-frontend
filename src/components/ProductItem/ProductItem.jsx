@@ -4,7 +4,8 @@ import './ProductItem.css';
 import FullScreenProduct from '../FullScreenProduct/FullScreenProduct';
 import ProductDetail from '../ProductDetail/ProductDetail';
 import { Link } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 const ProductItem = ({product, className, onAdd}) => {
     const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -42,10 +43,11 @@ const ProductItem = ({product, className, onAdd}) => {
             <div className={'price'}>
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
-            <Link className={'link'} to={`/product/${product.id}`} product={product.id}>Подробнее</Link>
-            <div style={{ marginTop: 'auto' }}>
+            
+            <div className="buttons_div">
+                <Link className={'link'} to={`/product/${product.id}`} product={product.id}><FontAwesomeIcon icon={faEye} /></Link>
                 <Button className={buttonClassName} onClick={onAddHandler}>
-                    {buttonText}
+                    <FontAwesomeIcon icon={faCartPlus} />
                 </Button>
             </div>
         </div>

@@ -22,7 +22,7 @@
 }
 
 .add-btn {
-    width: 100%;
+    width: 45%;
 }
 .add-btn.pressed {
     background:rgb(233,150,122);
@@ -36,4 +36,12 @@
     outline: none;
     cursor: pointer;
     text-decoration: none;
+    margin-right: 2px;
+    width: 45%;
+}
+.buttons_div{
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
