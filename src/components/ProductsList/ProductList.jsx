@@ -75,13 +75,15 @@ const ProductList = () =>{
         console.log('222');        
         fetchData();
 
-        
-    }, []);
-
-    tg.onEvent('mainButtonClicked', onSendData)
+        tg.onEvent('mainButtonClicked', onSendData)
         return () => {
             tg.offEvent('mainButtonClicked', onSendData)
         }
+
+        
+    }, []);
+
+    
 
     const onAdd = (product) =>{
         console.log(token);
