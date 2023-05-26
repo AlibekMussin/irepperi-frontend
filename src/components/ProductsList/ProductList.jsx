@@ -59,8 +59,7 @@ const ProductList = () =>{
         console.log('111');        
         setIsLoading(true);
         async function fetchData() {
-            try{
-                
+            try{                
                 const response = await fetch('https://shiba.kz/api/goods');
                 const jsonData = await response.json();
                 setProducts(jsonData.products);
@@ -73,15 +72,16 @@ const ProductList = () =>{
                 console.log(e);
             }
         }
-        console.log('222');
-        
+        console.log('222');        
         fetchData();
 
-        tg.onEvent('mainButtonClicked', onSendData)
+        
+    }, []);
+
+    tg.onEvent('mainButtonClicked', onSendData)
         return () => {
             tg.offEvent('mainButtonClicked', onSendData)
         }
-    }, [addedItems]);
 
     const onAdd = (product) =>{
         console.log(token);
@@ -113,6 +113,8 @@ const ProductList = () =>{
             })
         }
     }
+
+    
 
     return (
         <div className="list">
