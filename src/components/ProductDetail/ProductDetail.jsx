@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory  } from 'react-router-dom';
 import { useTelegram } from "../../hooks/useTelegram"; 
-
+import Spinner from "../Spinner/Spinner";
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
-
+import './ProductDetail.css';
 
 SwiperCore.use([Navigation, Pagination]);
-
 
 const ProductDetail = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState({});
     const {tg} = useTelegram();
+    const [isLoading, setIsLoading] = useState(true);
 
 
     useEffect(() => {
@@ -24,11 +24,14 @@ const ProductDetail = () => {
         console.log(productId);
         
         async function fetchData() {
+          setIsLoading(true);
             try{
                 const response = await fetch('https://shiba.kz/api/goods/'+productId);
                 const jsonData = await response.json();
-                setProduct(jsonData);
-                console.log(jsonData);
+                jsonData.description = jsonData.description.replace(/\n/g, '<br>');
+                setProduct(jsonData);                
+                setIsLoading(false);     
+                console.log(jsonData);                
             }
             catch (e)
             {
@@ -53,20 +56,14 @@ const ProductDetail = () => {
   
     return (
         <div className="product-detail">
-          <h2 className="product-title">{title}</h2>
-          <div className="product-description">{description}</div>
+          {isLoading ? (
+            <Spinner />
+          ) : (<div>
+          <h3 className="product-title">{title}</h3>
+          <br></br>        
+          <div className="product-description" style={{ whiteSpace: "pre-line" }}>{description.replace(/<br>/g, "\n")}</div>
           <div className="product-price">Стоимость: <b>{price}</b></div>
-          {/* <div className="product-images">
-            {images?.map((image, index) => (
-              <img
-                key={index}
-                className="product-image"
-                src={image.image_src}
-                alt={`Product Image ${index + 1}`}
-              />
-            ))}
-          </div> */}
-
+          <br></br>        
           <Swiper
             navigation
             pagination={{ clickable: true }}
@@ -78,8 +75,8 @@ const ProductDetail = () => {
                 <img src={image.image_src} alt={`Photo ${index + 1}`} />
               </SwiperSlide>
             ))}
-          </Swiper>
-
+          </Swiper></ div>
+          )}
         </div>
       );
   };
