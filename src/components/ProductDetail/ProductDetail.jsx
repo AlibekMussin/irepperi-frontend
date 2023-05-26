@@ -73,10 +73,10 @@ const ProductDetail = () => {
           >
             {images?.map((image, index) => (
               <SwiperSlide key={index}>
-                <img src={image.image_src} alt={`Photo ${index + 1}`} style={{width:'10%'}} />
+                <img src={image.image_src} alt={`Photo ${index + 1}`} style={{width:'90%'}} />
               </SwiperSlide>
             ))}
-          </Swiper> : <img src={main_image} alt={`Main Photo`} style={{width:'10%'}} />
+          </Swiper> : <img src={main_image} alt={`Main Photo`} style={{width:'90%'}} />
           }
           <br></br>
           <div className="product-info">{info.info_1?.map((info_div, index) => (
