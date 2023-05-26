@@ -5,8 +5,10 @@ import { useTelegram } from "../../hooks/useTelegram";
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
-// import 'swiper/components/navigation/navigation.min.css';
-// import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+
 
 SwiperCore.use([Navigation, Pagination]);
 
