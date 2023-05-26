@@ -27,12 +27,14 @@ const ProductList = () =>{
     const {tg, queryId} = useTelegram();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [token, setToken] = useState('');
 
     const onSendData = useCallback(() => {
         const data = {
             products: addedItems,
             totalPrice: getTotalPrice(addedItems),
             queryId,
+            token
         }
         fetch('https://wolf.shiba.kz/web-data',{
             method: 'POST',
@@ -62,7 +64,8 @@ const ProductList = () =>{
                 const response = await fetch('https://shiba.kz/api/goods');
                 const jsonData = await response.json();
                 setProducts(jsonData.products);
-                setIsLoading(false);     
+                setToken(jsonData.csrf_token);
+                setIsLoading(false);
                 console.log(jsonData);
             }
             catch (e)
@@ -73,14 +76,16 @@ const ProductList = () =>{
         console.log('222');
         
         fetchData();
+        onSendData();
 
         tg.onEvent('mainButtonClicked', onSendData)
         return () => {
             tg.offEvent('mainButtonClicked', onSendData)
         }
-    }, []);
+    }, [addedItems]);
 
     const onAdd = (product) =>{
+        console.log(token);
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         let newItems = [];
 

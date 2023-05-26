@@ -25,7 +25,6 @@ const ProductItem = ({product, className, onAdd}) => {
         else
             setIsButtonPressed(false);
 
-
         onAdd(product);
     }
 
@@ -45,7 +44,9 @@ const ProductItem = ({product, className, onAdd}) => {
             </div>
             
             <div className="buttons_div">
-                <Link className={'link'} to={`/product/${product.id}`} product={product.id}><FontAwesomeIcon icon={faEye} /></Link>
+                <Link className={'link'} to={`/product/${product.id}`} product={product.id}>
+                    <FontAwesomeIcon icon={faEye} />
+                </Link>
                 <Button className={buttonClassName} onClick={onAddHandler}>
                     <FontAwesomeIcon icon={faCartPlus} />
                 </Button>
