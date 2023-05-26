@@ -57,8 +57,8 @@ const ProductList = () =>{
         console.log('111');        
         
         async function fetchData() {
-            setIsLoading(true);
             try{
+                setIsLoading(true);
                 const response = await fetch('https://shiba.kz/api/goods');
                 const jsonData = await response.json();
                 setProducts(jsonData.products);
