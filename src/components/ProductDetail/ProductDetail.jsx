@@ -42,7 +42,7 @@ const ProductDetail = () => {
           // Обработка события кнопки "назад"
           console.log("Нажата кнопка 'назад'");
           // tg.goBack();
-          history.push('/other-page');
+          window.location.href = '/other-page';
           // Дополнительные действия
         });
     
