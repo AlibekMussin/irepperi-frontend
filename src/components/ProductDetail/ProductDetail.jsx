@@ -52,7 +52,7 @@ const ProductDetail = () => {
     // Получить информацию о товаре по ID из match.params
     // const productId = 0;
     // Здесь вы можете выполнить логику для получения подробной информации о товаре
-    const { title, description, price, images } = product;
+    const { title, description, price, images, main_image } = product;
   
     return (
         <div className="product-detail">
@@ -64,6 +64,7 @@ const ProductDetail = () => {
           <div className="product-description" style={{ whiteSpace: "pre-line" }}>{description.replace(/<br>/g, "\n")}</div>
           <div className="product-price">Стоимость: <b>{price}</b></div>
           <br></br>        
+          {(images.length>0) ? 
           <Swiper
             navigation
             pagination={{ clickable: true }}
@@ -75,7 +76,8 @@ const ProductDetail = () => {
                 <img src={image.image_src} alt={`Photo ${index + 1}`} style={{width:'100%'}} />
               </SwiperSlide>
             ))}
-          </Swiper></ div>
+          </Swiper> : <img src={main_image} alt={`Main Photo`} style={{width:'100%'}} />}
+          </div>
           )}
         </div>
       );
