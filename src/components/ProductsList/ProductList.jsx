@@ -79,40 +79,45 @@ const ProductList = () =>{
         return () => {
             cleanup = true
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+    tg.onEvent('mainButtonClicked', onSendData);
+    return () => {
+        tg.offEvent('mainButtonClicked', onSendData);
+    };
+    }, [tg, onSendData]);
 
 
-      useEffect(() => {
-        tg.onEvent('mainButtonClicked', onSendData);
-        return () => {
-          tg.offEvent('mainButtonClicked', onSendData);
-        };
-      }, [tg, onSendData]);
-
-      const onAdd = (product) => {
-        console.log(token);
+    const onAdd = (product) => {
+        // console.log(token);
         const alreadyAdded = addedItems.find(item => item.id === product.id);
+        console.log("alreadyAdded", alreadyAdded);
         let newItems = [];
-    
+
         if (alreadyAdded) {
-          newItems = addedItems.filter(item => item.id !== product.id);
+            console.log('if');
+            newItems = addedItems.filter(item => item.id !== product.id);
         } else {
-          newItems = [...addedItems, product];
+            console.log('else');
+            newItems = [...addedItems, product];
         }
-    
+
         setAddedItems(newItems);
-    
+
+        console.log(newItems);
+
         if (newItems.length === 0) {
-          tg.MainButton.hide();
+            tg.MainButton.hide();
         } else {
-          const goodsCount = newItems.length;
-          console.log(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
-          tg.MainButton.show();
-          tg.MainButton.setParams({
+            const goodsCount = newItems.length;
+            console.log(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
+            tg.MainButton.show();
+            tg.MainButton.setParams({
             text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`
-          });
+            });
         }
-      };
+    };
 
     return (
         <div className="list">
