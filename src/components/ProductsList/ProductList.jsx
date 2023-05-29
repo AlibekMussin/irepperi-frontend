@@ -29,8 +29,8 @@ const ProductList = () =>{
     const [isLoading, setIsLoading] = useState(false);
     const [token, setToken] = useState('');
 
-    const onSendData = useCallback((event) => {
-        event.preventDefault();
+    const onSendData = useCallback(() => {
+        // event.preventDefault();
         const data = {
           products: addedItems,
           totalPrice: getTotalPrice(addedItems),
