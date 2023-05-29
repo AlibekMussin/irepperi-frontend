@@ -79,9 +79,8 @@ const ProductList = () =>{
         return () => {
             tg.offEvent('mainButtonClicked', onSendData)
         }
-
         
-    }, []);
+    }, [addedItems]);
 
     
 
@@ -115,7 +114,6 @@ const ProductList = () =>{
             })
         }
     }
-
     
 
     return (
