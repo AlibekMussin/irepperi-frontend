@@ -5,3 +5,6 @@
 .product-description{
     padding-bottom: 5px;
 }
+:root{
+    --swiper-navigation-size: 30px;
+}
