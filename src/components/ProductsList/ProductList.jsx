@@ -29,92 +29,90 @@ const ProductList = () =>{
     const [isLoading, setIsLoading] = useState(false);
     const [token, setToken] = useState('');
 
-    const onSendData = useCallback(() => {
+    const onSendData = useCallback((event) => {
+        event.preventDefault();
         const data = {
-            products: addedItems,
-            totalPrice: getTotalPrice(addedItems),
-            queryId,
-            token
-        }
-        fetch('https://wolf.shiba.kz/web-data',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        }).then(response => {
+          products: addedItems,
+          totalPrice: getTotalPrice(addedItems),
+          queryId,
+          token
+        };
+    
+        fetch('https://wolf.shiba.kz/web-data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => {
             if (!response.ok) {
               throw new Error('Request failed');
             }
-            // Дополнительная обработка ответа, если необходимо
+            // Additional response handling, if necessary
             console.log('Request successful');
           })
           .catch(error => {
             console.error('Error:', error);
           });
-    }, [addedItems])
-
+      }, [addedItems, queryId, token]);
 
     useEffect(() => {
-        console.log('111');        
-        setIsLoading(true);
-        async function fetchData() {
-            try{                
+        console.log('111');
+        let cleanup = false;
+        (async () => {
+            try {
+                setIsLoading(true);
                 const response = await fetch('https://shiba.kz/api/goods');
                 const jsonData = await response.json();
-                setProducts(jsonData.products);
-                setToken(jsonData.csrf_token);
+                if (!cleanup) {
+                    setProducts(jsonData.products);
+                    setToken(jsonData.csrf_token);
+                }
+            } catch {
+
+            } finally {
                 setIsLoading(false);
-                console.log(jsonData);
             }
-            catch (e)
-            {
-                console.log(e);
-            }
-        }
-        console.log('222');        
-        fetchData();
-
-        tg.onEvent('mainButtonClicked', onSendData)
+        })()
+        console.log('222');
         return () => {
-            tg.offEvent('mainButtonClicked', onSendData)
+            cleanup = true
         }
-        
-    }, [addedItems]);
+    }, [])
 
-    
 
-    const onAdd = (product) =>{
+      useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData);
+        return () => {
+          tg.offEvent('mainButtonClicked', onSendData);
+        };
+      }, [tg, onSendData]);
+
+      const onAdd = (product) => {
         console.log(token);
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         let newItems = [];
-
-        if (alreadyAdded)
-        {
-            newItems = addedItems.filter(item => item.id !== product.id);
-        }
-        else
-        {
-            newItems = [...addedItems, product];
-        }
-
-        setAddedItems(newItems);
-
-        if (newItems.length === 0)
-        {
-            tg.MainButton.hide();
-        }
-        else
-        {
-          const goodsCount = newItems.length;
-          console.log( `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
-            tg.MainButton.show();
-            tg.MainButton.setParams({
-                text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`
-            })
-        }
-    }
     
+        if (alreadyAdded) {
+          newItems = addedItems.filter(item => item.id !== product.id);
+        } else {
+          newItems = [...addedItems, product];
+        }
+    
+        setAddedItems(newItems);
+    
+        if (newItems.length === 0) {
+          tg.MainButton.hide();
+        } else {
+          const goodsCount = newItems.length;
+          console.log(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
+          tg.MainButton.show();
+          tg.MainButton.setParams({
+            text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`
+          });
+        }
+      };
 
     return (
         <div className="list">
