@@ -34,6 +34,7 @@ const ProductList = () =>{
     const [laraSession, setLaraSession] = useState('');
     const [xsrfToken, setXsrfToken] = useState('');
     const [cookieStr, setCookieStr] = useState('');
+    const [orderButtonLabel, setOrderButtonLabel] = useState('Оформить заказ');
 
     // const onSendData = useCallback(() => {
     //     const cookie_str = 'XSRF-TOKEN='+xsrfToken+'; laravel_session='+laraSession;
@@ -155,14 +156,15 @@ const ProductList = () =>{
         console.log(newItems);
 
         if (newItems.length === 0) {
-            tg.MainButton.hide();
+            // tg.MainButton.hide();
         } else {
             const goodsCount = newItems.length;
             console.log(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
-            tg.MainButton.show();
-            tg.MainButton.setParams({
-            text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`
-            });
+            setOrderButtonLabel(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
+            // tg.MainButton.show();
+            // tg.MainButton.setParams({
+            // text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`
+            // });
         }
     };
 
@@ -209,9 +211,9 @@ const ProductList = () =>{
                 </AccordionItemPanel>
               </AccordionItem>
             ))}
-            {/* <Button className={'set_order'} onClick={onSendData}>Оформить заказ</Button> */}
-            <Link className={'button'} to={`/order_detail/${cookieStr}`} cookie_str={cookieStr}>
-                Оформить заказ
+            <br></br>
+            <Link className={'button set-order'} to={`/order_detail/${cookieStr}`} cookie_str={cookieStr}>
+                {orderButtonLabel}
             </Link>
           </Accordion>
         )}</div>
