@@ -125,7 +125,7 @@ const ProductList = () =>{
                 "product_id": product.id,
                 "token": token,
                 "action": "add",
-                "cookie_str": cookie_str
+                "cookie_str": cookieStr
             };
 
             console.log('else');

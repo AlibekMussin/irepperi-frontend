@@ -1,3 +1,10 @@
 .order-detail{
     padding: 5px;
 }
+.order-table{
+    border-collapse: collapse;
+}
+.order-table tr td, .order-table thead th{
+    padding: 10px;
+    border: 1px solid lightgray;
+}
