@@ -7,6 +7,9 @@ import {useCallback, useEffect} from "react";
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 import Masonry from 'react-masonry-css';
+import Button from "../Button/Button";
+import { Link } from 'react-router-dom';
+
 
 const breakpointColumnsObj = {
   default: 3, // Количество колонок по умолчанию
@@ -28,34 +31,42 @@ const ProductList = () =>{
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [token, setToken] = useState('');
+    const [laraSession, setLaraSession] = useState('');
+    const [xsrfToken, setXsrfToken] = useState('');
+    const [cookieStr, setCookieStr] = useState('');
 
-    const onSendData = useCallback(() => {
-        // event.preventDefault();
-        const data = {
-          products: addedItems,
-          totalPrice: getTotalPrice(addedItems),
-          queryId,
-          token
-        };
-    
-        fetch('https://wolf.shiba.kz/web-data', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Request failed');
-            }
-            // Additional response handling, if necessary
-            console.log('Request successful');
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-      }, [addedItems, queryId, token]);
+    // const onSendData = useCallback(() => {
+    //     const cookie_str = 'XSRF-TOKEN='+xsrfToken+'; laravel_session='+laraSession;
+    //     console.log('cookie_str', cookie_str);
+        
+    //     addedItems.forEach((product, index)=>{            
+    //         const data = {
+    //             "product_id": product.id,                
+    //             "token": token,
+    //             "action": "add",
+    //             "cookie_str":cookie_str
+    //         };
+        
+    //         fetch('https://shiba.kz/api/cart', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',                    
+    //             },
+    //             body: JSON.stringify(data),
+    //             credentials: 'include'
+    //         }).then(response => {
+    //             if (!response.ok) {
+    //             throw new Error('Request failed');
+    //             }
+    //             console.log(response.status);
+    //             // Additional response handling, if necessary
+    //             console.log('Request successful');
+    //         })
+    //         .catch(error => {
+    //             console.error('Error:', error);
+    //         });
+    //     });
+    // }, [addedItems, queryId, token, laraSession, xsrfToken]);
 
     useEffect(() => {
         console.log('111');
@@ -68,6 +79,9 @@ const ProductList = () =>{
                 if (!cleanup) {
                     setProducts(jsonData.products);
                     setToken(jsonData.csrf_token);
+                    setLaraSession(jsonData.lara_session);
+                    setXsrfToken(jsonData.xsrf_token);                    
+                    setCookieStr('XSRF-TOKEN='+jsonData.xsrf_token+'; laravel_session='+jsonData.lara_session);
                 }
             } catch {
 
@@ -81,30 +95,63 @@ const ProductList = () =>{
         }
     }, []);
 
-    useEffect(() => {
-    tg.onEvent('mainButtonClicked', onSendData);
-    return () => {
-        tg.offEvent('mainButtonClicked', onSendData);
-    };
-    }, [tg, onSendData]);
+    // useEffect(() => {
+    //     tg.onEvent('mainButtonClicked', onSendData);
+    //     return () => {
+    //         tg.offEvent('mainButtonClicked', onSendData);
+    //     };
+    // }, [tg, onSendData]);
 
 
-    const onAdd = (product) => {
-        // console.log(token);
+    const onAdd = (product) => {        
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         console.log("alreadyAdded", alreadyAdded);
         let newItems = [];
 
+        let data = {};
+
         if (alreadyAdded) {
-            console.log('if');
+            
+           data = {
+                "product_id": product.id,
+                "token": token,
+                "action": "removePosition",
+                "cookie_str": cookieStr
+            };
             newItems = addedItems.filter(item => item.id !== product.id);
         } else {
+
+            data = {
+                "product_id": product.id,
+                "token": token,
+                "action": "add",
+                "cookie_str": cookie_str
+            };
+
             console.log('else');
             newItems = [...addedItems, product];
         }
 
-        setAddedItems(newItems);
+        fetch('https://shiba.kz/api/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',                    
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+                console.log(response.status);
+                // Additional response handling, if necessary
+                console.log('Request successful');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
+        setAddedItems(newItems);
         console.log(newItems);
 
         if (newItems.length === 0) {
@@ -162,6 +209,10 @@ const ProductList = () =>{
                 </AccordionItemPanel>
               </AccordionItem>
             ))}
+            {/* <Button className={'set_order'} onClick={onSendData}>Оформить заказ</Button> */}
+            <Link className={'button'} to={`/order_detail/${cookieStr}`} cookie_str={cookieStr}>
+                Оформить заказ
+            </Link>
           </Accordion>
         )}</div>
       );

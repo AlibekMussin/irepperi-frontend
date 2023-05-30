@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import ProductList from './components/ProductsList/ProductList';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import FullScreenProduct from './components/FullScreenProduct/FullScreenProduct';
+import OrderDetail from './components/OrderDetail/OrderDetail';
 
 function App() {
   const {tg, onToggleButton} = useTelegram();
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route index element={<ProductList />}/>
         <Route path={'form'} element={<FullScreenProduct />}/>
+        <Route path={'order_detail/:cookieStr'} element={<OrderDetail />}/>
         <Route path={"/product/:productId"} element={<ProductDetail/>} />
       </Routes>
     </div>

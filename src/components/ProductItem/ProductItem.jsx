@@ -19,7 +19,7 @@ const ProductItem = ({product, className, onAdd}) => {
         setIsFullScreen(false);
       };
 
-    const onAddHandler = () => {
+    const onAddHandler = () => {        
         if (isButtonPressed == false)
             setIsButtonPressed(true);
         else
