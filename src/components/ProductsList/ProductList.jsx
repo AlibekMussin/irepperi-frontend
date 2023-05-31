@@ -36,39 +36,6 @@ const ProductList = () =>{
     const [cookieStr, setCookieStr] = useState('');
     const [orderButtonLabel, setOrderButtonLabel] = useState('Оформить заказ');
 
-    // const onSendData = useCallback(() => {
-    //     const cookie_str = 'XSRF-TOKEN='+xsrfToken+'; laravel_session='+laraSession;
-    //     console.log('cookie_str', cookie_str);
-        
-    //     addedItems.forEach((product, index)=>{            
-    //         const data = {
-    //             "product_id": product.id,                
-    //             "token": token,
-    //             "action": "add",
-    //             "cookie_str":cookie_str
-    //         };
-        
-    //         fetch('https://shiba.kz/api/cart', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',                    
-    //             },
-    //             body: JSON.stringify(data),
-    //             credentials: 'include'
-    //         }).then(response => {
-    //             if (!response.ok) {
-    //             throw new Error('Request failed');
-    //             }
-    //             console.log(response.status);
-    //             // Additional response handling, if necessary
-    //             console.log('Request successful');
-    //         })
-    //         .catch(error => {
-    //             console.error('Error:', error);
-    //         });
-    //     });
-    // }, [addedItems, queryId, token, laraSession, xsrfToken]);
-
     useEffect(() => {
         console.log('111');
         let cleanup = false;
@@ -96,17 +63,10 @@ const ProductList = () =>{
         }
     }, []);
 
-    // useEffect(() => {
-    //     tg.onEvent('mainButtonClicked', onSendData);
-    //     return () => {
-    //         tg.offEvent('mainButtonClicked', onSendData);
-    //     };
-    // }, [tg, onSendData]);
-
-
     const onAdd = (product) => {        
         const alreadyAdded = addedItems.find(item => item.id === product.id);
-        console.log("alreadyAdded", alreadyAdded);
+        // console.log("alreadyAdded", alreadyAdded);
+        console.log("token", token);
         let newItems = [];
 
         let data = {};
@@ -161,10 +121,7 @@ const ProductList = () =>{
             const goodsCount = newItems.length;
             console.log(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
             setOrderButtonLabel(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
-            // tg.MainButton.show();
-            // tg.MainButton.setParams({
-            // text: `Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`
-            // });
+           
         }
     };
 
@@ -213,10 +170,7 @@ const ProductList = () =>{
             ))}
             <br></br>
             <Link className={'button set-order'} 
-                to={{
-                    pathname: `/order_detail/${cookieStr}`,
-                    state: { token, cookieStr },
-                }} 
+                to={`/order_detail/${cookieStr}?token=${token}`}
                 >
                 {orderButtonLabel}
             </Link>

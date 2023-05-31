@@ -7,6 +7,7 @@ import { useTelegram } from "../../hooks/useTelegram";
 
 const OrderDetail = () => {
     const location = useLocation();
+    
     const {cookieStr } = useParams();
     const [isLoading, setIsLoading] = useState(false);
     const [order, setOrder] = useState({});
@@ -26,11 +27,11 @@ const OrderDetail = () => {
     const [streetName, setStreetName] = useState('');
     const [houseNumber, setHouseNumber] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
-    const token = location.state?.token;
-    const cookie_check = location.state?.cookieStr;
-
-    console.log('token',token);
-    console.log('cookie_check', cookie_check);
+    
+    const searchParams = new URLSearchParams(location.search);
+    const token = searchParams.get('token');
+    console.log('token', token);
+    
 
 
     const handleLastNameChange = (event) => {
