@@ -15,6 +15,14 @@ const OrderDetail = () => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [selectedDeliveryOption, setDeliverySelectedOption] = useState('');
+    const [showAdditionalInputs, setShowAdditionalInputs] = useState(false);
+    const [showShowRoomAddress, setShowShowRoomAddress] = useState(false);
+    const [city, setCity] = useState('Астана');
+    const [streetName, setStreetName] = useState('');
+    const [houseNumber, setHouseNumber] = useState('');
+    const [apartmentNumber, setApartmentNumber] = useState('');
+
 
     const handleLastNameChange = (event) => {
         setLastName(event.target.value);
@@ -24,6 +32,25 @@ const OrderDetail = () => {
     };
     const handlePhoneNumberChange = (event) => {
         setPhoneNumber(event.target.value);
+    };
+
+    const handleDeliveryOptionChange = (event) => {
+        setDeliverySelectedOption(event.target.value);
+        setShowAdditionalInputs(event.target.value === 'courier' || event.target.value === 'kazpost');
+        setShowShowRoomAddress(event.target.value === 'pickup');
+    };
+
+    const handleCityChange = (event) => {
+        setCity(event.target.value);
+    };
+    const handleStreetNameChange = (event) => {
+        setStreetName(event.target.value);
+    };
+    const handleHouseNumberChange = (event) => {
+        setHouseNumber(event.target.value);
+    };
+    const handleApartmentNumberChange = (event) => {
+        setApartmentNumber(event.target.value);
     };
 
     useEffect(() => {
@@ -85,11 +112,66 @@ const OrderDetail = () => {
                 ))}
                 </tbody>
             </table>
-            <div>
-                
-                <input className="input" type="text" value={user?.last_name} onChange={handleLastNameChange} placeholder="Фамилия"/></div>
-            <div><input className="input" type="text" value={user?.first_name} onChange={handleFirstNameChange} placeholder="Имя" /></div>
-            <div><input className="input" type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/></div>
+            <div className="inputs_form">
+                <h4>Данные получателя</h4>
+                <div>
+                    <label htmlFor="last_name">Фамилия</label><br></br>
+                    <input className="input" id={'last_name'} type="text" value={user?.last_name} onChange={handleLastNameChange} placeholder="Фамилия"/>
+                </div>
+                <div>
+                    <label htmlFor="first_name">Имя</label><br></br>
+                    <input className="input" id={'first_name'} type="text" value={user?.first_name} onChange={handleFirstNameChange} placeholder="Имя" />
+                </div>
+                <div>
+                    <label htmlFor="phone_nubmer">Номер телефона (контактный)</label><br></br>
+                    <input className="input" id={'phone_nubmer'} type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/>
+                </div>
+
+                <div>
+                    <h4>Доставка</h4>
+                    <div className="radio-inputs">
+                        <label>
+                            <input type="radio" value="courier" checked={selectedDeliveryOption === 'courier'} onChange={handleDeliveryOptionChange} />Курьером</label>
+                        <br></br>
+                        <label>
+                            <input type="radio" value="pickup" checked={selectedDeliveryOption === 'pickup'} onChange={handleDeliveryOptionChange}/>Самовывоз</label>
+                        <br></br>
+
+                        <label>
+                            <input type="radio" value="kazpost" checked={selectedDeliveryOption === 'kazpost'} onChange={handleDeliveryOptionChange}/>Казпочтой</label>
+                    </div>
+
+                    {showAdditionalInputs && (
+                        <div className="additional-inputs">
+                            <label>
+                                Город:<br></br>
+                                <input className={'input'} type="text" name="city" value={city} onChange={handleCityChange} />
+                            </label><br></br>
+
+                            <label>
+                                Улица:<br></br>
+                                <input className={'input'} type="text" name="street" value={streetName}  onChange={handleStreetNameChange} />
+                            </label><br></br>
+                            <table>
+                                <tr>
+                                    <td>Номер дома:</td>
+                                    <td>Номер квартиры:</td>
+                                </tr>
+                                <tr>
+                                    <td><input className={'input input-mini'} type="text" name="houseNumber" value={houseNumber} onChange={handleHouseNumberChange} /></td>
+                                    <td><input className={'input input-mini'} type="text" name="apartmentNumber" value={apartmentNumber} onChange={handleApartmentNumberChange} /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    )}
+                    {showShowRoomAddress && (
+                        <div>
+                            Самовывоз из: <strong>Астана, ул. Туркестан 16. 3 этаж, 3005 Шоурум CLOVER</strong>
+                        </div>
+                    )}
+
+                </div>
+            </div>
             
         </div>
     );

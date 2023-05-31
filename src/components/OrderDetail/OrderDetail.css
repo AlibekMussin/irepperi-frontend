@@ -1,5 +1,11 @@
 .order-detail{
-    padding: 5px;
+    padding: 10px;
+}
+.inputs_form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding-top: 10px;    
 }
 .order-table{
     border-collapse: collapse;
@@ -12,7 +18,17 @@ label{
     margin-top: 5px;
 }
 .input {    
-    min-width: 50%;
+    min-width: 100%;
     padding: 8px;
-    margin-top: 10px;
+    margin-top: 5px;
+}
+.input-mini{
+    min-width: 50%;
+}
+.radio-inputs{
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+.radio-inputs input{
+    margin-right:5px;
 }
