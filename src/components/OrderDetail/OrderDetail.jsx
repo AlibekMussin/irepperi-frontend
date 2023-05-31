@@ -14,8 +14,8 @@ const OrderDetail = () => {
     const [totalFirst, setTotalFirst] = useState(0);    
     const [delivery, setDelivery] = useState(0);
     const {tg, user} = useTelegram();
-    const [lastName, setLastName] = useState('');
-    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState(user?.last_name);
+    const [firstName, setFirstName] = useState(user?.first_name);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [selectedDeliveryOption, setDeliverySelectedOption] = useState('');
     const [showAdditionalInputs, setShowAdditionalInputs] = useState(false);
@@ -177,11 +177,11 @@ const OrderDetail = () => {
                 <h4>Данные получателя</h4>
                 <div>
                     <label htmlFor="last_name">Фамилия</label><br></br>
-                    <input className="input" id={'last_name'} type="text" value={user?.last_name} onChange={handleLastNameChange} placeholder="Фамилия"/>
+                    <input className="input" id={'last_name'} type="text" value={lastName} onChange={handleLastNameChange} placeholder="Фамилия"/>
                 </div>
                 <div>
                     <label htmlFor="first_name">Имя</label><br></br>
-                    <input className="input" id={'first_name'} type="text" value={user?.first_name} onChange={handleFirstNameChange} placeholder="Имя" />
+                    <input className="input" id={'first_name'} type="text" value={firstName} onChange={handleFirstNameChange} placeholder="Имя" />
                 </div>
                 <div>
                     <label htmlFor="phone_nubmer">Номер телефона (контактный)</label><br></br>
