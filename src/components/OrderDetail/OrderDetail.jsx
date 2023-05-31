@@ -4,6 +4,7 @@ import Spinner from "../Spinner/Spinner";
 import { useParams, useHistory  } from 'react-router-dom';
 import { useTelegram } from "../../hooks/useTelegram"; 
 
+
 const OrderDetail = () => {
     const {cookieStr } = useParams();
     const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +12,19 @@ const OrderDetail = () => {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
     const {tg, user} = useTelegram();
+    const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    const handleLastNameChange = (event) => {
+        setLastName(event.target.value);
+      };
+    const handleFirstNameChange = (event) => {
+        setFirstName(event.target.value);
+    };
+    const handlePhoneNumberChange = (event) => {
+        setPhoneNumber(event.target.value);
+    };
 
     useEffect(() => {
         console.log('555');
@@ -71,7 +85,12 @@ const OrderDetail = () => {
                 ))}
                 </tbody>
             </table>
-            <div>{user?.last_name}</div>
+            <div>
+                
+                <input className="input" type="text" value={user?.last_name} onChange={handleLastNameChange} placeholder="Фамилия"/></div>
+            <div><input className="input" type="text" value={user?.first_name} onChange={handleFirstNameChange} placeholder="Имя" /></div>
+            <div><input className="input" type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/></div>
+            
         </div>
     );
 }
