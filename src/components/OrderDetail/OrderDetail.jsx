@@ -111,12 +111,15 @@ const OrderDetail = () => {
           houseNumber: houseNumber,
           apartmentNumber: apartmentNumber
         };
+        const cookieStrM = cookieStr.replace('%20',' ');
     
         fetch('https://shiba.kz/api/order', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Cookies': cookieStr
           },
+          credentials: 'include',
           body: JSON.stringify(data),
         })
           .then((response) => response.json())
