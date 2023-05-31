@@ -26,7 +26,11 @@ const OrderDetail = () => {
     const [streetName, setStreetName] = useState('');
     const [houseNumber, setHouseNumber] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
-    const token = location.state.token;
+    const token = location.state?.token;
+    const cookie_check = location.state?.cookieStr;
+
+    console.log('token',token);
+    console.log('cookie_check', cookie_check);
 
 
     const handleLastNameChange = (event) => {

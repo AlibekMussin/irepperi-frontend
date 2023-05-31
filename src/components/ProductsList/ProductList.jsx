@@ -215,9 +215,9 @@ const ProductList = () =>{
             <Link className={'button set-order'} 
                 to={{
                     pathname: `/order_detail/${cookieStr}`,
-                    state: { token },
+                    state: { token, cookieStr },
                 }} 
-                cookie_str={cookieStr}>
+                >
                 {orderButtonLabel}
             </Link>
           </Accordion>
