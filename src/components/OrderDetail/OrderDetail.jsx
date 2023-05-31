@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import './OrderDetail.css';
 import Spinner from "../Spinner/Spinner";
-import { useParams, useHistory  } from 'react-router-dom';
+import { useParams, useHistory, useLocation   } from 'react-router-dom';
 import { useTelegram } from "../../hooks/useTelegram"; 
 
 
 const OrderDetail = () => {
+    const location = useLocation();
     const {cookieStr } = useParams();
     const [isLoading, setIsLoading] = useState(false);
     const [order, setOrder] = useState({});
@@ -25,6 +26,7 @@ const OrderDetail = () => {
     const [streetName, setStreetName] = useState('');
     const [houseNumber, setHouseNumber] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
+    const token = location.state.token;
 
 
     const handleLastNameChange = (event) => {
@@ -109,7 +111,9 @@ const OrderDetail = () => {
           city: cityValue,
           streetName: streetName,
           houseNumber: houseNumber,
-          apartmentNumber: apartmentNumber
+          apartmentNumber: apartmentNumber,
+          token: token
+
         };
         const cookieStrM = cookieStr.replace('%20',' ');
     
