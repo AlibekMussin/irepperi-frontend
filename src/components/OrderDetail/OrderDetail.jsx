@@ -102,9 +102,9 @@ const OrderDetail = () => {
 
     const handleSubmit = () => {        
         const data = {
-          last_name: lastName,
-          first_name: firstName,
-          phone_number: phoneNumber,
+          lastName: lastName,
+          firstName: firstName,
+          phoneNumber: phoneNumber,
           deliveryMethod: selectedDeliveryOption,
           city: cityValue,
           streetName: streetName,
