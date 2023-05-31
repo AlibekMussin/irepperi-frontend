@@ -11,7 +11,7 @@
     border-collapse: collapse;
 }
 .order-table tr td, .order-table thead th{
-    padding: 10px;
+    padding: 5px;
     border: 1px solid lightgray;
 }
 label{   

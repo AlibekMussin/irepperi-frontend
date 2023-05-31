@@ -1,7 +1,7 @@
 body {
     font-family: var(--default-font);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    font-size: 13px;
+    font-size: 15px;
     line-height: 16px;
     font-weight: 400;
     background:var(--tg-theme-bg-color);
