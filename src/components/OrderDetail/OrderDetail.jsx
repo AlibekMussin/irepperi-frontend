@@ -100,6 +100,37 @@ const OrderDetail = () => {
         }
     }, []);
 
+    const handleSubmit = () => {        
+        const data = {
+          last_name: lastName,
+          first_name: firstName,
+          phone_number: phoneNumber,
+          deliveryMethod: selectedDeliveryOption,
+          city: cityValue,
+          streetName: streetName,
+          houseNumber: houseNumber,
+          apartmentNumber: apartmentNumber
+        };
+    
+        fetch('https://shiba.kz/api/order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((responseData) => {
+            // Обработка ответа от сервера
+            console.log(responseData);
+          })
+          .catch((error) => {
+            // Обработка ошибок
+            console.error(error);
+          });
+      };
+
+
     return (
         <div className="order-detail">
             <h2>Оформление заказа</h2><br></br>
@@ -129,8 +160,10 @@ const OrderDetail = () => {
                         <td></td>
                     </tr>                
                     <tr>
-                        <th colSpan={2}>Доставка</th>
-                        <td>{delivery>0 ? <div>{delivery}</div> : <div>Бесплатно</div>} </td>
+                        <th colSpan={2}>Доставка{delivery>0 ? <div style={{fontWeight:'normal'}}><bR></bR>
+                        <em>*Если сумма заказа превысит 25000 ₸,<br></br> то доставка курьером/ Казпочтой<br></br> будет бесплатной.</em></div>: <div></div>}</th>
+                        <td>{delivery>0 ? <div>{delivery}
+                        </div> : <div>Бесплатно</div>} </td>
                         <td></td>
                     </tr>                
                     <tr>
@@ -159,14 +192,14 @@ const OrderDetail = () => {
                     <h4>Доставка</h4>
                     <div className="radio-inputs">
                         <label>
-                            <input type="radio" value="courier" checked={selectedDeliveryOption === 'courier'} onChange={handleDeliveryOptionChange} />Курьером</label>
+                            <input name="deliveryMethod" type="radio" value="courier" checked={selectedDeliveryOption === 'courier'} onChange={handleDeliveryOptionChange} />Курьером</label>
                         <br></br>
                         <label>
-                            <input type="radio" value="pickup" checked={selectedDeliveryOption === 'pickup'} onChange={handleDeliveryOptionChange}/>Самовывоз</label>
+                            <input name="deliveryMethod" type="radio" value="pickup" checked={selectedDeliveryOption === 'pickup'} onChange={handleDeliveryOptionChange}/>Самовывоз</label>
                         <br></br>
 
                         <label>
-                            <input type="radio" value="kazpost" checked={selectedDeliveryOption === 'kazpost'} onChange={handleDeliveryOptionChange}/>Казпочтой/ СДЭК/ Рикой/ др.</label>
+                            <input name="deliveryMethod" type="radio" value="kazpost" checked={selectedDeliveryOption === 'kazpost'} onChange={handleDeliveryOptionChange}/>Казпочтой/ СДЭК/ Рикой/ др.</label>
                     </div>
 
                     {showAdditionalInputs && (
@@ -204,6 +237,7 @@ const OrderDetail = () => {
                         </div>
                     )}
 
+                    <button onClick={handleSubmit}>Подтвердить</button>
                 </div>
             </div>
             
