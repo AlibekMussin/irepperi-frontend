@@ -11,6 +11,8 @@ const OrderDetail = () => {
     const [order, setOrder] = useState({});
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
+    const [totalFirst, setTotalFirst] = useState(0);    
+    const [delivery, setDelivery] = useState(0);
     const {tg, user} = useTelegram();
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -19,6 +21,7 @@ const OrderDetail = () => {
     const [showAdditionalInputs, setShowAdditionalInputs] = useState(false);
     const [showShowRoomAddress, setShowShowRoomAddress] = useState(false);
     const [city, setCity] = useState('Астана');
+    const [cityValue, setCityValue] = useState('Астана');
     const [streetName, setStreetName] = useState('');
     const [houseNumber, setHouseNumber] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
@@ -38,10 +41,16 @@ const OrderDetail = () => {
         setDeliverySelectedOption(event.target.value);
         setShowAdditionalInputs(event.target.value === 'courier' || event.target.value === 'kazpost');
         setShowShowRoomAddress(event.target.value === 'pickup');
+
+        if (event.target.value === 'courier') {
+            setCityValue('Астана'); // Set the desired value for Option 1
+          } else {
+            setCityValue('Астана'); // Reset the value for other options
+          }
     };
 
     const handleCityChange = (event) => {
-        setCity(event.target.value);
+        setCityValue(event.target.value);
     };
     const handleStreetNameChange = (event) => {
         setStreetName(event.target.value);
@@ -76,6 +85,8 @@ const OrderDetail = () => {
                     setOrder(jsonData);
                     setProducts(jsonData.goods);
                     setTotal(jsonData.total);
+                    setTotalFirst(jsonData.total_first);
+                    setDelivery(jsonData.delivery)
                 }
             } catch {
 
@@ -111,8 +122,25 @@ const OrderDetail = () => {
                     </tr>
                 ))}
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colSpan={2}>Сумма</th>
+                        <td>{totalFirst>0 ? <div>{totalFirst}</div> : <div>0</div>} </td>
+                        <td></td>
+                    </tr>                
+                    <tr>
+                        <th colSpan={2}>Доставка</th>
+                        <td>{delivery>0 ? <div>{delivery}</div> : <div>Бесплатно</div>} </td>
+                        <td></td>
+                    </tr>                
+                    <tr>
+                        <th colSpan={2}>К оплате</th>
+                        <td>{total}</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
-            <div className="inputs_form">
+            <div className="inputs-form">
                 <h4>Данные получателя</h4>
                 <div>
                     <label htmlFor="last_name">Фамилия</label><br></br>
@@ -127,7 +155,7 @@ const OrderDetail = () => {
                     <input className="input" id={'phone_nubmer'} type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/>
                 </div>
 
-                <div>
+                <div className="delivery-inputs">
                     <h4>Доставка</h4>
                     <div className="radio-inputs">
                         <label>
@@ -138,14 +166,20 @@ const OrderDetail = () => {
                         <br></br>
 
                         <label>
-                            <input type="radio" value="kazpost" checked={selectedDeliveryOption === 'kazpost'} onChange={handleDeliveryOptionChange}/>Казпочтой</label>
+                            <input type="radio" value="kazpost" checked={selectedDeliveryOption === 'kazpost'} onChange={handleDeliveryOptionChange}/>Казпочтой/ СДЭК/ Рикой/ др.</label>
                     </div>
 
                     {showAdditionalInputs && (
                         <div className="additional-inputs">
                             <label>
                                 Город:<br></br>
-                                <input className={'input'} type="text" name="city" value={city} onChange={handleCityChange} />
+                                <input 
+                                className={'input'}
+                                type="text" 
+                                name="city" 
+                                value={cityValue} onChange={handleCityChange}
+                                disabled={selectedDeliveryOption === 'courier'} 
+                                 />
                             </label><br></br>
 
                             <label>

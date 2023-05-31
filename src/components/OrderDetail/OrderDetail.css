@@ -1,18 +1,21 @@
 .order-detail{
     padding: 10px;
 }
-.inputs_form{
+.inputs-form{
     display: flex;
     flex-direction: column;
     width: 90%;
-    padding-top: 10px;    
+    padding-top: 15px;    
 }
 .order-table{
     border-collapse: collapse;
 }
-.order-table tr td, .order-table thead th{
+.order-table tr td, .order-table thead th, .order-table tfoot th{
     padding: 5px;
     border: 1px solid lightgray;
+}
+.order-table tfoot th{
+    text-align: left;
 }
 label{   
     margin-top: 5px;
@@ -31,4 +34,7 @@ label{
 }
 .radio-inputs input{
     margin-right:5px;
+}
+.delivery-inputs{
+    margin-top: 15px;
 }
