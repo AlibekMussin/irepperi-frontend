@@ -237,7 +237,7 @@ const OrderDetail = () => {
                         </div>
                     )}
 
-                    <button onClick={handleSubmit}>Подтвердить</button>
+                    <button className="button" onClick={handleSubmit}>Подтвердить заказ</button>
                 </div>
             </div>
             
