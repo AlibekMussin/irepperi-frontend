@@ -27,12 +27,10 @@ const OrderDetail = () => {
     const [streetName, setStreetName] = useState('');
     const [houseNumber, setHouseNumber] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
-    
+    const [idEmpotencyKey, setIdEmpotencyKey] = useState('');
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get('token');
     console.log('token', token);
-    
-
 
     const handleLastNameChange = (event) => {
         setLastName(event.target.value);
@@ -94,6 +92,7 @@ const OrderDetail = () => {
                     setTotal(jsonData.total);
                     setTotalFirst(jsonData.total_first);
                     setDelivery(jsonData.delivery)
+                    setIdEmpotencyKey(jsonData.idempotency_key);
                 }
             } catch {
 
@@ -117,7 +116,8 @@ const OrderDetail = () => {
           streetName: streetName,
           houseNumber: houseNumber,
           apartmentNumber: apartmentNumber,
-          token: token
+          token: token,
+          idEmpotencyKey: idEmpotencyKey,
 
         };
         const cookieStrM = cookieStr.replace('%20',' ');
