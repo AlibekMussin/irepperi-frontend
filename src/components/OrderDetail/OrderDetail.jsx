@@ -45,7 +45,7 @@ const OrderDetail = () => {
     const handleDeliveryOptionChange = (event) => {
         setDeliverySelectedOption(event.target.value);
         setShowAdditionalInputs(event.target.value === 'courier' || event.target.value === 'kazpost');
-        setShowShowRoomAddress(event.target.value === 'pickup');
+        setShowShowRoomAddress(event.target.value === 'self');
 
         if (event.target.value === 'courier') {
             setCityValue('Астана'); // Set the desired value for Option 1
@@ -251,7 +251,7 @@ const OrderDetail = () => {
                             <input name="deliveryMethod" type="radio" value="courier" checked={selectedDeliveryOption === 'courier'} onChange={handleDeliveryOptionChange} />Курьером</label>
                         <br></br>
                         <label>
-                            <input name="deliveryMethod" type="radio" value="pickup" checked={selectedDeliveryOption === 'pickup'} onChange={handleDeliveryOptionChange}/>Самовывоз</label>
+                            <input name="deliveryMethod" type="radio" value="self" checked={selectedDeliveryOption === 'self'} onChange={handleDeliveryOptionChange}/>Самовывоз</label>
                         <br></br>
 
                         <label>
