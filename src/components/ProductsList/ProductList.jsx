@@ -174,7 +174,7 @@ const ProductList = () =>{
                     <br></br>
                     
                 </Accordion>
-                <div className="fixed-link">
+                <div className="fixed-link" style={{width:'100%'}}>
                         {isButtonDisabled ? <div>Выберите товары для заказа</div> : (<Link className={'button set-order'} 
                             to={`/order_detail/${cookieStr}?token=${token}`}
                             >
