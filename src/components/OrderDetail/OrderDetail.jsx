@@ -3,7 +3,7 @@ import './OrderDetail.css';
 import Spinner from "../Spinner/Spinner";
 import { useParams, useHistory, useLocation   } from 'react-router-dom';
 import { useTelegram } from "../../hooks/useTelegram"; 
-
+import InputMask from 'react-input-mask';
 
 const OrderDetail = () => {
     const location = useLocation();
@@ -29,6 +29,7 @@ const OrderDetail = () => {
     const [houseNumber, setHouseNumber] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
     const [idEmpotencyKey, setIdEmpotencyKey] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get('token');
 
@@ -36,13 +37,34 @@ const OrderDetail = () => {
 
     const handleLastNameChange = (event) => {
         setLastName(event.target.value);
+        checkFormValidity();
       };
     const handleFirstNameChange = (event) => {
         setFirstName(event.target.value);
+        checkFormValidity();
     };
     const handlePhoneNumberChange = (event) => {
-        setPhoneNumber(event.target.value);
+
+        const inputPhoneNumber = event.target.value;
+        // Удаляем все символы, кроме цифр
+        const numericPhoneNumber = inputPhoneNumber.replace(/\D/g, '');
+        // Форматируем номер телефона
+        const formattedPhoneNumber = formatPhoneNumber(numericPhoneNumber);
+
+        setPhoneNumber(formattedPhoneNumber);
+        checkFormValidity();
     };
+
+    const formatPhoneNumber = (phoneNumber) => {
+        // Форматируем номер телефона в виде "+7 (705) 456-75-54"
+        const formattedNumber = phoneNumber.replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, '+$1 ($2) $3-$4-$5');
+    
+        return formattedNumber;
+      };
+
+    const checkFormValidity = () => {
+        setIsFormValid(lastName !== '' && firstName !== '' && phoneNumber !== '');
+      };
 
     const handleDeliveryOptionChange = (event) => {
         setDeliverySelectedOption(event.target.value);
@@ -221,7 +243,7 @@ const OrderDetail = () => {
                         <td></td>
                     </tr>                
                     <tr>
-                        <th colSpan={2}>Доставка{delivery>0 ? <div style={{fontWeight:'normal'}}><bR></bR>
+                        <th colSpan={2}>Доставка{delivery>0 ? <div style={{fontWeight:'normal'}}><br></br>
                         <em>*Если сумма заказа превысит 25000 ₸,<br></br> то доставка курьером/ Казпочтой<br></br> будет бесплатной.</em></div>: <div></div>}</th>
                         <td>{delivery>0 ? <div>{delivery}
                         </div> : <div>Бесплатно</div>} </td>
@@ -241,12 +263,24 @@ const OrderDetail = () => {
                     <input required className="input" id={'last_name'} type="text" value={lastName} onChange={handleLastNameChange} placeholder="Фамилия"/>
                 </div>
                 <div>
-                    <label required htmlFor="first_name">Имя</label><br></br>
-                    <input className="input" id={'first_name'} type="text" value={firstName} onChange={handleFirstNameChange} placeholder="Имя" />
+                    <label htmlFor="first_name">Имя</label><br></br>
+                    <input required className="input" id={'first_name'} type="text" value={firstName} onChange={handleFirstNameChange} placeholder="Имя" />
                 </div>
                 <div>
-                    <label htmlFor="phone_nubmer">Номер телефона (контактный)</label><br></br>
-                    <input required className="input" id={'phone_nubmer'} type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/>
+                    <label htmlFor="phone_number">Номер телефона (контактный)</label><br></br>
+                    
+                    {/* <input required className="input" id={'phone_number'} type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/> */}
+
+                    <InputMask
+                    className="input"
+                    id="phone_number"
+                    type="text"
+                    value={phoneNumber}
+                    onChange={handlePhoneNumberChange}
+                    mask="+7 (999) 999-99-99"
+                    placeholder="+7 (705) 456-75-54"
+                    required
+                    />
                 </div>
 
                 <div className="delivery-inputs">
@@ -299,7 +333,7 @@ const OrderDetail = () => {
                     )}
                     
                     {isSubmitLoading ? (<Spinner />) : (
-                    <button className="button" onClick={handleSubmit}>Подтвердить заказ</button>)}
+                    <button  disabled={!isFormValid} className="button" onClick={handleSubmit}>Подтвердить заказ</button>)}
                 </div>
             </div>
             </div>)}
