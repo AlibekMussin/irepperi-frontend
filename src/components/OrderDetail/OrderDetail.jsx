@@ -140,7 +140,7 @@ const OrderDetail = () => {
                 credentials: 'include'
             }).then((response_tnx) => {
                 const tnxJson = response_tnx.json();
-                console.log(tnxJson);
+                console.log('tnxJson', tnxJson);
                 
                 const data_for_bot = {
                     title: tnxJson.title,
@@ -150,6 +150,7 @@ const OrderDetail = () => {
                     queryId,
                     token
                 };
+                console.log('data_for_bot', data_for_bot);
                 
                 fetch('https://wolf.shiba.kz/web-data', {
                     method: 'POST',
@@ -168,10 +169,7 @@ const OrderDetail = () => {
                     .catch(error_bot => {
                       console.error('Error:', error_bot);
                     });
-                
-
-                setIsLoading(false);
-                // tg.close();
+                setIsLoading(false);              
             });
 
           })
