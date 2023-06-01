@@ -195,15 +195,21 @@ const OrderDetail = () => {
                 return response_tnx.json(); // Возвращаем промис
               }).then((tnxJson) => {                
                 console.log('tnxJson', tnxJson);
-                
+
+                let deliveryForSend = delivery;
+                if (!isDeliveryNeed)
+                {
+                    deliveryForSend = 0;
+                }
+
                 const data_for_bot = {
                     title: tnxJson.title,
                     text: tnxJson.text,
                     number: tnxJson.number,
                     payment: tnxJson.payment,
                     products: products,
-                    total: total,
-                    delivery: delivery,
+                    total: newTotal,
+                    delivery: deliveryForSend,
                     queryId,
                     token
                 };
@@ -287,15 +293,15 @@ const OrderDetail = () => {
             <div className="inputs-form">
                 <h4>Данные получателя</h4>
                 <div>
-                    <label htmlFor="last_name">Фамилия</label><br></br>
+                    <label htmlFor="last_name">Фамилия <strong>*</strong></label><br></br>
                     <input required className="input" id={'last_name'} type="text" value={lastName} onChange={handleLastNameChange} placeholder="Фамилия"/>
                 </div>
                 <div>
-                    <label htmlFor="first_name">Имя</label><br></br>
+                    <label htmlFor="first_name">Имя <strong>*</strong></label><br></br>
                     <input required className="input" id={'first_name'} type="text" value={firstName} onChange={handleFirstNameChange} placeholder="Имя" />
                 </div>
                 <div>
-                    <label htmlFor="phone_number">Номер телефона (контактный)</label><br></br>
+                    <label htmlFor="phone_number">Номер телефона (контактный) <strong>*</strong></label><br></br>
                     
                     <InputMask
                     className="input"
