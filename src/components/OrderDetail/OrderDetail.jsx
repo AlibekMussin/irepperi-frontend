@@ -238,15 +238,15 @@ const OrderDetail = () => {
                 <h4>Данные получателя</h4>
                 <div>
                     <label htmlFor="last_name">Фамилия</label><br></br>
-                    <input className="input" id={'last_name'} type="text" value={lastName} onChange={handleLastNameChange} placeholder="Фамилия"/>
+                    <input required className="input" id={'last_name'} type="text" value={lastName} onChange={handleLastNameChange} placeholder="Фамилия"/>
                 </div>
                 <div>
-                    <label htmlFor="first_name">Имя</label><br></br>
+                    <label required htmlFor="first_name">Имя</label><br></br>
                     <input className="input" id={'first_name'} type="text" value={firstName} onChange={handleFirstNameChange} placeholder="Имя" />
                 </div>
                 <div>
                     <label htmlFor="phone_nubmer">Номер телефона (контактный)</label><br></br>
-                    <input className="input" id={'phone_nubmer'} type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/>
+                    <input required className="input" id={'phone_nubmer'} type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/>
                 </div>
 
                 <div className="delivery-inputs">
