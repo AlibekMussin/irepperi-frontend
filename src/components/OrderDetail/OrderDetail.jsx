@@ -148,6 +148,7 @@ const OrderDetail = () => {
                     text: tnxJson.text,
                     number: tnxJson.number,
                     payment: tnxJson.payment,
+                    products: products,
                     queryId,
                     token
                 };
