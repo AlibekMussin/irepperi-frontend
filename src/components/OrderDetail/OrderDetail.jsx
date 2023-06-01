@@ -145,7 +145,7 @@ const OrderDetail = () => {
             }).then((response_tnx) => {
                 const tnxJson = response_tnx.json
                 
-                const data = {
+                const data_for_bot = {
                     title: tnxJson.title,
                     text: tnxJson.text,
                     number: tnxJson.number,
@@ -159,17 +159,17 @@ const OrderDetail = () => {
                     headers: {
                       'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data_for_bot)
                   })
-                    .then(response => {
-                      if (!response.ok) {
+                    .then(response_bot => {
+                      if (!response_bot.ok) {
                         throw new Error('Request failed');
                       }
                       // Additional response handling, if necessary
                       console.log('Request successful');
                     })
-                    .catch(error => {
-                      console.error('Error:', error);
+                    .catch(error_bot => {
+                      console.error('Error:', error_bot);
                     });
                 
 
