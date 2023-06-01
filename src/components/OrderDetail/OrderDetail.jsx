@@ -174,7 +174,7 @@ const OrderDetail = () => {
                 
 
                 setIsLoading(false);
-                tg.close();
+                // tg.close();
             });
 
           })
