@@ -15,7 +15,7 @@ const OrderDetail = () => {
     const [total, setTotal] = useState(0);
     const [totalFirst, setTotalFirst] = useState(0);    
     const [delivery, setDelivery] = useState(0);
-    const {tg, user} = useTelegram();
+    const {tg, user, queryId} = useTelegram();
     const [lastName, setLastName] = useState(user?.last_name);
     const [firstName, setFirstName] = useState(user?.first_name);
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -134,7 +134,49 @@ const OrderDetail = () => {
           .then((response) => response.json())
           .then((responseData) => {
             // Обработка ответа от сервера
-            console.log(responseData);
+            console.log("data sended");
+
+            setIsLoading(true);
+            const response_tnx = fetch('https://shiba.kz/api/thankyou',{
+                headers:{
+                    'Cookies': cookieStr
+                },
+                credentials: 'include'
+            }).then((response_tnx) => {
+                const tnxJson = response_tnx.json
+                
+                const data = {
+                    title: tnxJson.title,
+                    text: tnxJson.text,
+                    number: tnxJson.number,
+                    payment: tnxJson.payment,
+                    queryId,
+                    token
+                };
+                
+                fetch('https://wolf.shiba.kz/web-data', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                  })
+                    .then(response => {
+                      if (!response.ok) {
+                        throw new Error('Request failed');
+                      }
+                      // Additional response handling, if necessary
+                      console.log('Request successful');
+                    })
+                    .catch(error => {
+                      console.error('Error:', error);
+                    });
+                
+
+                setIsLoading(false);
+                tg.close();
+            });
+
           })
           .catch((error) => {
             // Обработка ошибок
@@ -146,6 +188,9 @@ const OrderDetail = () => {
     return (
         <div className="order-detail">
             <h2>Оформление заказа</h2><br></br>
+            {isLoading ? (
+            <Spinner />
+          ) : (<div>
             <table className="order-table">
                 <thead>
                 <tr>
@@ -252,6 +297,7 @@ const OrderDetail = () => {
                     <button className="button" onClick={handleSubmit}>Подтвердить заказ</button>
                 </div>
             </div>
+            </div>)}
             
         </div>
     );
