@@ -71,9 +71,7 @@ const OrderDetail = () => {
         console.log('555');
         console.log('cookieStr', cookieStr);
         let cleanup = false;
-        const cookieStrM = cookieStr.replace('%20',' ');
-
-        // console.log('cookieStrM', cookieStrM);
+        
         (async () => {
             try {
                 setIsLoading(true);
@@ -118,9 +116,7 @@ const OrderDetail = () => {
           apartmentNumber: apartmentNumber,
           token: token,
           idEmpotencyKey: idEmpotencyKey,
-
-        };
-        const cookieStrM = cookieStr.replace('%20',' ');
+        };        
     
         fetch('https://shiba.kz/api/order', {
           method: 'POST',
@@ -143,7 +139,8 @@ const OrderDetail = () => {
                 },
                 credentials: 'include'
             }).then((response_tnx) => {
-                const tnxJson = response_tnx.json
+                const tnxJson = response_tnx.json();
+                console.log(tnxJson);
                 
                 const data_for_bot = {
                     title: tnxJson.title,
