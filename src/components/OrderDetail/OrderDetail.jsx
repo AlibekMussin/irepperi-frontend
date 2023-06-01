@@ -149,6 +149,8 @@ const OrderDetail = () => {
                     number: tnxJson.number,
                     payment: tnxJson.payment,
                     products: products,
+                    total: total,
+                    delivery: delivery,
                     queryId,
                     token
                 };
