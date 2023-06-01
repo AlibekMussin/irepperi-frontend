@@ -183,46 +183,46 @@ const OrderDetail = () => {
           .then((response) => {
             return response.json();
         }).then((tnxJson) => {                
-                console.log('tnxJson', tnxJson);
+            console.log('tnxJson', tnxJson);
 
-                let deliveryForSend = delivery;
-                if (!isDeliveryNeed)
-                {
-                    deliveryForSend = 0;
-                }
+            let deliveryForSend = delivery;
+            if (!isDeliveryNeed)
+            {
+                deliveryForSend = 0;
+            }
 
-                const data_for_bot = {
-                    title: tnxJson.title,
-                    text: tnxJson.text,
-                    number: tnxJson.number,
-                    payment: tnxJson.payment,
-                    products: products,
-                    total: newTotal,
-                    delivery: deliveryForSend,
-                    queryId,
-                    token
-                };
-                console.log('data_for_bot', data_for_bot);
-                
-                fetch('https://wolf.shiba.kz/web-data', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data_for_bot)
-                  })
-                    .then(response_bot => {
-                      if (!response_bot.ok) {
-                        throw new Error('Request failed');
-                      }
-                      // Additional response handling, if necessary
-                      console.log('Request successful');
-                    })
-                    .catch(error_bot => {
-                      console.error('Error:', error_bot);
-                    });
-                setIsLoading(false);
-                setIsSubmitLoading(false);     
+            const data_for_bot = {
+                title: tnxJson.title,
+                text: tnxJson.text,
+                number: tnxJson.number,
+                payment: tnxJson.payment,
+                products: products,
+                total: newTotal,
+                delivery: deliveryForSend,
+                queryId,
+                token
+            };
+            console.log('data_for_bot', data_for_bot);
+            
+            fetch('https://wolf.shiba.kz/web-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data_for_bot)
+                })
+                .then(response_bot => {
+                    if (!response_bot.ok) {
+                    throw new Error('Request failed');
+                    }
+                    // Additional response handling, if necessary
+                    console.log('Request successful');
+                })
+                .catch(error_bot => {
+                    console.error('Error:', error_bot);
+                });
+            setIsLoading(false);
+            setIsSubmitLoading(false);     
             })
             .catch((error) => {
             // Обработка ошибок
