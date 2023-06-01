@@ -14,6 +14,7 @@ const OrderDetail = () => {
     const [order, setOrder] = useState({});
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
+    const [newTotal, setNewTotal] = useState(0);
     const [totalFirst, setTotalFirst] = useState(0);    
     const [delivery, setDelivery] = useState(0);
     const {tg, user, queryId} = useTelegram();
@@ -30,10 +31,11 @@ const OrderDetail = () => {
     const [apartmentNumber, setApartmentNumber] = useState('');
     const [idEmpotencyKey, setIdEmpotencyKey] = useState('');
     const [isFormValid, setIsFormValid] = useState(false);
+    const [isDeliveryNeed, setIsDeliveryNeed] = useState(false);
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get('token');
 
-    console.log('token', token);
+    // console.log('token', token);
 
     const handleLastNameChange = (event) => {
         setLastName(event.target.value);
@@ -70,12 +72,31 @@ const OrderDetail = () => {
         setDeliverySelectedOption(event.target.value);
         setShowAdditionalInputs(event.target.value === 'courier' || event.target.value === 'kazpost');
         setShowShowRoomAddress(event.target.value === 'self');
+        setCityValue('Астана'); // Reset the value for other options
+        setNewTotal(total);
+        setIsDeliveryNeed(true);
 
-        if (event.target.value === 'courier') {
-            setCityValue('Астана'); // Set the desired value for Option 1
-          } else {
-            setCityValue('Астана'); // Reset the value for other options
+        console.log(event.target.value);
+
+        if (event.target.value === 'self') {
+            setNewTotal(total - 1500);
+            setIsDeliveryNeed(false);
           }
+          else {
+            if (total<25000)
+            {
+                setNewTotal(total);
+                setIsDeliveryNeed(true);
+            }
+            else 
+            {
+                setNewTotal(total - 1500);
+                setIsDeliveryNeed(true);
+            }
+                
+          }
+          console.log('total', total);
+          console.log('newTotal', newTotal);
     };
 
     const handleCityChange = (event) => {
@@ -127,6 +148,13 @@ const OrderDetail = () => {
             cleanup = true
         }
     }, []);
+
+    useEffect(() => {
+        setNewTotal(total);
+        setIsDeliveryNeed(delivery>0);
+        console.log('total', total);
+        console.log('newTotal', newTotal);
+    }, [total]);
 
     const handleSubmit = () => {
         setIsSubmitLoading(true);
@@ -219,12 +247,12 @@ const OrderDetail = () => {
           ) : (<div>
             <table className="order-table">
                 <thead>
-                <tr>
-                    <th></th>
-                    <th>Наименование</th>
-                    <th>Цена</th>
-                    <th>Количество</th>
-                </tr>
+                    <tr>
+                        <th></th>
+                        <th>Наименование</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                    </tr>
                 </thead>
                 <tbody>
                 {products.map(item => (
@@ -242,16 +270,16 @@ const OrderDetail = () => {
                         <td>{totalFirst>0 ? <div>{totalFirst}</div> : <div>0</div>} </td>
                         <td></td>
                     </tr>                
-                    <tr>
+                    {isDeliveryNeed ? <tr>
                         <th colSpan={2}>Доставка{delivery>0 ? <div style={{fontWeight:'normal'}}><br></br>
                         <em>*Если сумма заказа превысит 25000 ₸,<br></br> то доставка курьером/ Казпочтой<br></br> будет бесплатной.</em></div>: <div></div>}</th>
                         <td>{delivery>0 ? <div>{delivery}
                         </div> : <div>Бесплатно</div>} </td>
                         <td></td>
-                    </tr>                
+                    </tr> : <></>}
                     <tr>
                         <th colSpan={2}>К оплате</th>
-                        <td>{total}</td>
+                        <td>{newTotal}</td>
                         <td></td>
                     </tr>
                 </tfoot>
@@ -269,8 +297,6 @@ const OrderDetail = () => {
                 <div>
                     <label htmlFor="phone_number">Номер телефона (контактный)</label><br></br>
                     
-                    {/* <input required className="input" id={'phone_number'} type="text" value={phoneNumber} onChange={handlePhoneNumberChange}  placeholder="Номер телефона"/> */}
-
                     <InputMask
                     className="input"
                     id="phone_number"
