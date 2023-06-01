@@ -180,20 +180,9 @@ const OrderDetail = () => {
           credentials: 'include',
           body: JSON.stringify(data),
         })
-          .then((response) => response.json())
-          .then((responseData) => {
-            // Обработка ответа от сервера
-            console.log("data sended");
-
-            setIsLoading(true);
-            const response_tnx = fetch('https://shiba.kz/api/thankyou',{
-                headers:{
-                    'Cookies': cookieStr
-                },
-                credentials: 'include'
-            }).then((response_tnx) => {
-                return response_tnx.json(); // Возвращаем промис
-              }).then((tnxJson) => {                
+          .then((response) => {
+            return response.json();
+        }).then((tnxJson) => {                
                 console.log('tnxJson', tnxJson);
 
                 let deliveryForSend = delivery;
@@ -234,10 +223,8 @@ const OrderDetail = () => {
                     });
                 setIsLoading(false);
                 setIsSubmitLoading(false);     
-            });
-
-          })
-          .catch((error) => {
+            })
+            .catch((error) => {
             // Обработка ошибок
             console.error(error);
             setIsSubmitLoading(false);
