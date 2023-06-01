@@ -293,15 +293,15 @@ const OrderDetail = () => {
             <div className="inputs-form">
                 <h4>Данные получателя</h4>
                 <div>
-                    <label htmlFor="last_name">Фамилия <strong>*</strong></label><br></br>
+                    <label htmlFor="last_name">Фамилия <strong style={{color:'red'}}>*</strong></label><br></br>
                     <input required className="input" id={'last_name'} type="text" value={lastName} onChange={handleLastNameChange} placeholder="Фамилия"/>
                 </div>
                 <div>
-                    <label htmlFor="first_name">Имя <strong>*</strong></label><br></br>
+                    <label htmlFor="first_name">Имя <strong style={{color:'red'}}>*</strong></label><br></br>
                     <input required className="input" id={'first_name'} type="text" value={firstName} onChange={handleFirstNameChange} placeholder="Имя" />
                 </div>
                 <div>
-                    <label htmlFor="phone_number">Номер телефона (контактный) <strong>*</strong></label><br></br>
+                    <label htmlFor="phone_number">Номер телефона (контактный) <strong style={{color:'red'}}>*</strong></label><br></br>
                     
                     <InputMask
                     className="input"
