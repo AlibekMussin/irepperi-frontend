@@ -15,8 +15,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 40px;
-    width: 100%;
 }
 
 .item {
@@ -68,17 +66,4 @@ body {
   .accordion__button:before{
     height: 5px!important;
     width: 5px!important;
-  }
-
-  .accordion-wrapper {
-    position: relative;
-    height: 80%;
-  }
-  
-  .fixed-link {
-    position: fixed;
-    bottom: 20px; /* Укажите желаемый отступ от нижнего края экрана */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999; /* Установите при необходимости, чтобы ссылка была поверх других элементов */
   }

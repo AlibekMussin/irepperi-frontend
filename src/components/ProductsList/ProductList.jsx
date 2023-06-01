@@ -132,8 +132,8 @@ const ProductList = () =>{
         {isLoading ? (
             <Spinner />
           ) : (
-            <div className="accordion-wrapper">
-                <Accordion allowZeroExpanded style={{"width":"100%", zIndex: "1"}}>
+            
+                <Accordion allowZeroExpanded style={{"width":"100%"}}>
                     {products.reduce((sections, item) => {
                     const sectionIndex = sections.findIndex(
                         section => section.title === item.section_title
@@ -172,16 +172,16 @@ const ProductList = () =>{
                     </AccordionItem>
                     ))}
                     <br></br>
-                    
-                </Accordion>
-                <div className="fixed-link" style={{width:'100%'}}>
-                        {isButtonDisabled ? <div>Выберите товары для заказа</div> : (<Link className={'button set-order'} 
+                    {isButtonDisabled ? <div>Выберите товары для заказа</div> : (<Link className={'button set-order'} 
                             to={`/order_detail/${cookieStr}?token=${token}`}
                             >
                             {orderButtonLabel}
-                        </Link>)}
-                    </div>
-          </div>
+                        </Link>)}                
+                    
+                </Accordion>
+
+                        
+                
         )}</div>
       );
 }
