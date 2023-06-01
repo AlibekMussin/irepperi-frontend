@@ -35,6 +35,7 @@ const ProductList = () =>{
     const [xsrfToken, setXsrfToken] = useState('');
     const [cookieStr, setCookieStr] = useState('');
     const [orderButtonLabel, setOrderButtonLabel] = useState('Оформить заказ');
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     useEffect(() => {
         console.log('111');
@@ -116,8 +117,9 @@ const ProductList = () =>{
         console.log(newItems);
 
         if (newItems.length === 0) {
-            // tg.MainButton.hide();
+            setIsButtonDisabled(true);
         } else {
+            setIsButtonDisabled(false);
             const goodsCount = newItems.length;
             console.log(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
             setOrderButtonLabel(`Оформить заказ (${goodsCount} тов. по цене: ${getTotalPrice(newItems)} тнг)`);
@@ -130,51 +132,56 @@ const ProductList = () =>{
         {isLoading ? (
             <Spinner />
           ) : (
-          <Accordion allowZeroExpanded style={{"width":"100%"}}>
-            {products.reduce((sections, item) => {
-              const sectionIndex = sections.findIndex(
-                section => section.title === item.section_title
-              );
-              if (sectionIndex === -1) {
-                sections.push({
-                  title: item.section_title,
-                  items: [item]
-                });
-              } else {
-                sections[sectionIndex].items.push(item);
-              }
-              return sections;
-            }, []).map(section => (
-              <AccordionItem key={section.title}>
-                <AccordionItemHeading>
-                    <AccordionItemButton>{section.title}</AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                    <Masonry
-                    breakpointCols={breakpointColumnsObj}
-                    className="masonry-grid"
-                    columnClassName="masonry-grid-column"
-                    >
-                        {section.items.map(item => (
-                            <div key={item.id} className="section-item">
-                                <ProductItem
-                                product={item}
-                                onAdd={onAdd}
-                                className={'item'}
-                            />
-                            </div>
-                        ))}
-                    </Masonry>                  
-                </AccordionItemPanel>
-              </AccordionItem>
-            ))}
-            <br></br>
-            <Link className={'button set-order'} 
-                to={`/order_detail/${cookieStr}?token=${token}`}
-                >
-                {orderButtonLabel}
-            </Link>
-          </Accordion>
+            <div className="accordion-wrapper">
+                <Accordion allowZeroExpanded style={{"width":"100%", zIndex: "1"}}>
+                    {products.reduce((sections, item) => {
+                    const sectionIndex = sections.findIndex(
+                        section => section.title === item.section_title
+                    );
+                    if (sectionIndex === -1) {
+                        sections.push({
+                        title: item.section_title,
+                        items: [item]
+                        });
+                    } else {
+                        sections[sectionIndex].items.push(item);
+                    }
+                    return sections;
+                    }, []).map(section => (
+                    <AccordionItem key={section.title}>
+                        <AccordionItemHeading>
+                            <AccordionItemButton>{section.title}</AccordionItemButton>
+                        </AccordionItemHeading>
+                        <AccordionItemPanel>
+                            <Masonry
+                            breakpointCols={breakpointColumnsObj}
+                            className="masonry-grid"
+                            columnClassName="masonry-grid-column"
+                            >
+                                {section.items.map(item => (
+                                    <div key={item.id} className="section-item">
+                                        <ProductItem
+                                        product={item}
+                                        onAdd={onAdd}
+                                        className={'item'}
+                                    />
+                                    </div>
+                                ))}
+                            </Masonry>                  
+                        </AccordionItemPanel>
+                    </AccordionItem>
+                    ))}
+                    <br></br>
+                    
+                </Accordion>
+                <div className="fixed-link">
+                        {isButtonDisabled ? <div>Выберите товары для заказа</div> : (<Link className={'button set-order'} 
+                            to={`/order_detail/${cookieStr}?token=${token}`}
+                            >
+                            {orderButtonLabel}
+                        </Link>)}
+                    </div>
+          </div>
         )}</div>
       );
 }

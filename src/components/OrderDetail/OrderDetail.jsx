@@ -10,6 +10,7 @@ const OrderDetail = () => {
     
     const {cookieStr } = useParams();
     const [isLoading, setIsLoading] = useState(false);
+    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
     const [order, setOrder] = useState({});
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
@@ -30,6 +31,7 @@ const OrderDetail = () => {
     const [idEmpotencyKey, setIdEmpotencyKey] = useState('');
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get('token');
+
     console.log('token', token);
 
     const handleLastNameChange = (event) => {
@@ -104,7 +106,8 @@ const OrderDetail = () => {
         }
     }, []);
 
-    const handleSubmit = () => {        
+    const handleSubmit = () => {
+        setIsSubmitLoading(true);
         const data = {
           lastName: lastName,
           firstName: firstName,
@@ -173,13 +176,15 @@ const OrderDetail = () => {
                     .catch(error_bot => {
                       console.error('Error:', error_bot);
                     });
-                setIsLoading(false);              
+                setIsLoading(false);
+                setIsSubmitLoading(false);     
             });
 
           })
           .catch((error) => {
             // Обработка ошибок
             console.error(error);
+            setIsSubmitLoading(false);
           });
       };
 
@@ -292,8 +297,9 @@ const OrderDetail = () => {
                             Самовывоз из: <strong>Астана, ул. Туркестан 16. 3 этаж, 3005 Шоурум CLOVER</strong>
                         </div>
                     )}
-
-                    <button className="button" onClick={handleSubmit}>Подтвердить заказ</button>
+                    
+                    {isSubmitLoading ? (<Spinner />) : (
+                    <button className="button" onClick={handleSubmit}>Подтвердить заказ</button>)}
                 </div>
             </div>
             </div>)}
