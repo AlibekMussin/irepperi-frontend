@@ -139,7 +139,8 @@ const OrderDetail = () => {
                 },
                 credentials: 'include'
             }).then((response_tnx) => {
-                const tnxJson = response_tnx.json();
+                return response_tnx.json(); // Возвращаем промис
+              }).then((tnxJson) => {                
                 console.log('tnxJson', tnxJson);
                 
                 const data_for_bot = {
