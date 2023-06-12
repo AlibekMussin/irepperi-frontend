@@ -43,7 +43,7 @@ const ProductDetail = () => {
         tg.BackButton.show();
         tg.onEvent('backButtonClicked', function() {          
           console.log("Нажата кнопка 'назад'");          
-          window.location.href = 'https://dazzling-centaur-bfa773.netlify.app';          
+          window.location.href = 'https://irepperi.shiba.kz';
         });
     
     }, []);
