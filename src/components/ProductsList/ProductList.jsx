@@ -36,14 +36,15 @@ const ProductList = () =>{
     const [cookieStr, setCookieStr] = useState('');
     const [orderButtonLabel, setOrderButtonLabel] = useState('Оформить заказ');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const botUrl = process.env.REACT_APP_BOT_URL;
 
     useEffect(() => {
-        console.log('111');
+        console.log('getting goods');
         let cleanup = false;
         (async () => {
             try {
                 setIsLoading(true);
-                const response = await fetch('https://shiba.kz/api/goods');
+                const response = await fetch(botUrl+'/api/goods');
                 const jsonData = await response.json();
                 if (!cleanup) {
                     setProducts(jsonData.products);
@@ -94,7 +95,7 @@ const ProductList = () =>{
             newItems = [...addedItems, product];
         }
 
-        fetch('https://shiba.kz/api/cart', {
+        fetch(botUrl+'/api/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',                    

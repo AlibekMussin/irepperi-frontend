@@ -34,6 +34,7 @@ const OrderDetail = () => {
     const [isDeliveryNeed, setIsDeliveryNeed] = useState(false);
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get('token');
+    const botUrl = process.env.REACT_APP_BOT_URL;
 
     // console.log('token', token);
 
@@ -120,7 +121,7 @@ const OrderDetail = () => {
         (async () => {
             try {
                 setIsLoading(true);
-                const response = await fetch('https://shiba.kz/api/order',{
+                const response = await fetch(botUrl+'/api/order',{
                     headers:{
                         'Cookies': cookieStr
                     },
@@ -171,7 +172,7 @@ const OrderDetail = () => {
           idEmpotencyKey: idEmpotencyKey,
         };        
     
-        fetch('https://shiba.kz/api/order', {
+        fetch(botUrl+'/api/order', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ const ProductDetail = () => {
     const [product, setProduct] = useState({});
     const {tg} = useTelegram();
     const [isLoading, setIsLoading] = useState(true);
-
+    const botUrl = process.env.REACT_APP_BOT_URL;
 
     useEffect(() => {
         console.log('333');
@@ -26,7 +26,7 @@ const ProductDetail = () => {
         async function fetchData() {
           setIsLoading(true);
             try{
-                const response = await fetch('https://shiba.kz/api/goods/'+productId);
+                const response = await fetch(botUrl+'/api/goods/'+productId);
                 const jsonData = await response.json();
                 jsonData.description = jsonData.description.replace(/\n/g, '<br>');
                 setProduct(jsonData);                
