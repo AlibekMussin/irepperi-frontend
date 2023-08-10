@@ -205,7 +205,7 @@ const OrderDetail = () => {
             };
             console.log('data_for_bot', data_for_bot);
             
-            fetch('https://wolf.shiba.kz/web-data', {
+            fetch('https://irepperibot.kz/web-data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
